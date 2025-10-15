@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check } from 'lucide-react';
 
-const ScriptLabPro = () => {
+const App = () => {
   const [stage, setStage] = useState('intro');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -233,7 +233,13 @@ const ScriptLabPro = () => {
         });
         
         const data = await response.json();
-        setStrategy(data.strategy);
+        
+        if (data.fallback || !data.strategy) {
+          setStrategy(generateFallbackStrategy());
+        } else {
+          setStrategy(data.strategy);
+        }
+        
         setStage('result');
       } catch (error) {
         console.error('Erreur:', error);
@@ -248,42 +254,158 @@ const ScriptLabPro = () => {
   const generateFallbackStrategy = () => {
     const isCold = answers.call_type === 'cold';
     const isB2B = answers.market === 'B2B' || answers.market === 'Les deux';
+    const companyName = answers.company_name || '[Votre entreprise]';
+    
+    const painPointInterpreted = interpretPainPoint(answers.main_pain);
+    const triggerInterpreted = interpretTrigger(answers.trigger_events);
+    const valueInterpreted = interpretValueProp(answers.value_prop);
     
     return {
       intro: isCold 
-        ? `Bonjour ${answers.prospect_title || '[Prénom]'}, je suis [Votre nom] de ${answers.company_name || '[Entreprise]'}.\n\nJe travaille avec des ${isB2B ? 'entreprises' : 'professionnels'} qui ${answers.main_pain || 'cherchent à améliorer leurs résultats'}.\n\nJ'ai vu que ${answers.trigger_events || 'votre contexte pourrait bénéficier de notre approche'}. Avez-vous 2 minutes pour que je vous explique pourquoi je vous contacte ?`
-        : `Bonjour ${answers.prospect_title || '[Prénom]'}, merci de prendre ce temps.\n\nJe sais que vous avez manifesté un intérêt pour ${answers.product_type}. Pour optimiser notre échange, j'aimerais d'abord comprendre votre situation actuelle.\n\nPouvez-vous me parler de ${answers.main_pain || 'vos défis actuels'} ?`,
+        ? `Bonjour [Prénom], je suis [Votre nom] de ${companyName}.\n\nJe contacte des ${answers.prospect_title} ${isB2B ? 'comme vous' : ''} parce que j'observe que ${painPointInterpreted}. ${triggerInterpreted ? `Surtout quand ${triggerInterpreted}.` : ''}\n\nC'est précisément ce sur quoi nous intervenons. Avez-vous 2 minutes pour que je vous explique comment ?`
+        : `Bonjour [Prénom], merci de prendre ce temps d'échange.\n\nJe sais que ${valueInterpreted} vous intéresse. Avant d'entrer dans le détail de notre approche, j'aimerais mieux comprendre votre contexte.\n\nPouvez-vous me parler de ${painPointInterpreted} dans votre situation actuelle ?`,
       
       discovery: [
-        `Parlez-moi de votre contexte actuel concernant ${answers.main_pain || 'ce sujet'}. Qu'est-ce qui fonctionne, qu'est-ce qui ne fonctionne pas ?`,
-        `${answers.trigger_events ? `Vous mentionnez ${answers.trigger_events}. Depuis combien de temps cette situation dure-t-elle ?` : 'Quels sont vos objectifs prioritaires pour les 6-12 prochains mois ?'}`,
-        `Si vous pouviez résoudre UN seul problème aujourd'hui, lequel choisiriez-vous et pourquoi ?`,
-        `Comment mesurez-vous le succès actuellement ? Quels KPIs regardez-vous ?`
+        `Comment gérez-vous actuellement ${reformulateForQuestion(answers.main_pain)} au sein de votre ${isB2B ? 'organisation' : 'activité'} ?`,
+        `Depuis combien de temps cette situation dure-t-elle ? Qu'est-ce qui a déjà été tenté ?`,
+        `Quel impact ${painPointInterpreted} a-t-il sur ${isB2B ? 'vos objectifs business' : 'votre chiffre d\'affaires'} concrètement ?`,
+        `Si vous pouviez résoudre ce problème dans les 3 prochains mois, qu'est-ce que ça changerait pour vous ?`
       ],
       
-      value_positioning: `Ce qui nous distingue : ${answers.value_prop || '[votre proposition de valeur]'}.\n\nContrairement à ${answers.competitors || 'd\'autres solutions'}, ${answers.usp || 'notre approche unique permet'}.\n\nConcrètement, nos clients ${isB2B ? 'B2B' : ''} constatent [résultat mesurable] en [délai], ce qui leur permet de [impact business].`,
+      value_positioning: `Nous aidons des ${isB2B ? 'entreprises' : 'professionnels'} ${answers.market} à ${valueInterpreted}.\n\nNotre différence ? ${reformulateUSP(answers.usp, answers.competitors)}.\n\nConcrètement, nos clients constatent une amélioration de 30-50% sur ${getKPIFromPain(answers.main_pain)} en moyenne sous ${getCycleFromTicket(answers.ticket)}.`,
       
-      differentiation: `Vs ${answers.competitors || 'concurrents'} :\n- ${answers.usp || 'Notre différenciateur clé'}\n- Pas de [friction habituelle du marché]\n- [Bénéfice unique que personne d'autre n'offre]`,
+      differentiation: buildDifferentiation(answers),
       
       objection_handling: {
-        [answers.top_objection]: answers.top_objection === '"C\'est trop cher"'
-          ? `"Je comprends la question du budget. Laissez-moi vous poser une question : combien vous coûte ${answers.main_pain || 'le problème actuel'} par mois ?\n\nSi notre solution vous permet de ${answers.value_prop || 'résoudre ce problème'}, le ROI se fait en [calculer durée]. C'est un investissement, pas une dépense."`
-          : answers.top_objection === '"On a déjà un outil"'
-          ? `"Excellent, vous avez déjà ${answers.competitors || 'une solution'}. Question : qu'est-ce qui manque aujourd'hui ? Si c'était parfait, seriez-vous en train de me parler ?\n\nLa plupart de nos clients utilisaient [concurrent] avant. Ce qui les a fait changer : ${answers.usp || '[votre différence]'}."`
-          : answers.top_objection === '"Pas le bon moment"'
-          ? `"Je comprends. Par curiosité, qu'est-ce qui ferait que ce SERAIT le bon moment ? [Attendre réponse]\n\nSouvent, 'pas le bon moment' signifie que ce n'est pas assez prioritaire. Si ${answers.main_pain || 'ce problème'} persiste dans 6 mois, quel impact cela aura-t-il ?"`
-          : `"${answers.top_objection} - Je comprends cette préoccupation. Laissez-moi vous partager comment nos clients ont surmonté exactement cette même question..."`
+        [answers.top_objection]: buildObjectionResponse(answers.top_objection, answers)
       },
       
-      closing: answers.call_objective === 'Obtenir un RDV découverte'
-        ? `"D'après ce que vous m'avez partagé, ${answers.main_pain || 'votre situation'} mérite qu'on creuse ensemble.\n\nProchaine étape logique : un échange de 30 minutes avec [expert interne] pour voir concrètement comment on pourrait vous aider.\n\nJe regarde mon agenda - vous préférez mardi ou jeudi cette semaine ?"`
-        : answers.call_objective === 'Closer la vente'
-        ? `"Récapitulons : vous cherchez à ${answers.value_prop || '[objectif]'}, vous avez identifié que ${answers.main_pain || '[pain]'} est votre blocage principal, et notre solution répond précisément à ça.\n\nSur une échelle de 1 à 10, où vous situez-vous dans votre décision ? [Attendre]\n\nQu'est-ce qui vous manque pour passer à ${answers.decision_maker === 'Mon interlocuteur direct' ? '10' : 'convaincre votre direction'} ?"`
-        : `"Quelle serait la prochaine étape logique pour vous ? Qu'est-ce qui vous aiderait à avancer dans votre réflexion ?"`,
+      closing: buildClosing(answers),
       
-      follow_up_email: `Objet : Suite à notre échange - ${answers.company_name || '[Votre entreprise]'}\n\nBonjour ${answers.prospect_title || '[Prénom]'},\n\nMerci pour cet échange de qualité ce ${answers.channel === 'Téléphone' ? 'matin' : 'jour'}.\n\nComme discuté, vous cherchez à ${answers.value_prop || '[résoudre X]'}, et votre principal défi est ${answers.main_pain || '[Y]'}.\n\nVoici les 3 points clés à retenir :\n1. ${answers.usp || '[Point clé 1]'}\n2. [Point clé 2 basé sur la conversation]\n3. [Point clé 3]\n\nProchaine étape : ${answers.call_objective || '[action]'}\n\nDisponible pour échanger ?\n\nBien à vous,\n[Signature]`
+      follow_up_email: buildFollowUpEmail(answers, painPointInterpreted, valueInterpreted)
     };
   };
+
+  function interpretPainPoint(pain) {
+    if (!pain) return "certains défis opérationnels reviennent régulièrement";
+    
+    const lower = pain.toLowerCase();
+    if (lower.includes('objection')) return "beaucoup d'équipes perdent des deals faute de réponses adaptées aux objections";
+    if (lower.includes('performance')) return "les résultats commerciaux ne sont pas à la hauteur du potentiel";
+    if (lower.includes('temps')) return "énormément de temps est perdu sur des tâches à faible valeur ajoutée";
+    if (lower.includes('formation')) return "former et faire monter en compétence les équipes prend trop de temps";
+    if (lower.includes('closing')) return "les opportunités ne se concrétisent pas assez souvent en signature";
+    
+    return `beaucoup rencontrent des difficultés autour de ${pain.toLowerCase()}`;
+  }
+
+  function interpretTrigger(trigger) {
+    if (!trigger) return "";
+    
+    const lower = trigger.toLowerCase();
+    if (lower.includes('performance')) return "les objectifs ne sont pas atteints";
+    if (lower.includes('turnover') || lower.includes('rotation')) return "le turnover des équipes devient problématique";
+    if (lower.includes('expansion') || lower.includes('croissance')) return "il y a une phase de croissance ou d'expansion";
+    if (lower.includes('nouveau') || lower.includes('marché')) return "vous attaquez de nouveaux marchés";
+    
+    return `je constate que ${trigger.toLowerCase()}`;
+  }
+
+  function interpretValueProp(value) {
+    if (!value) return "améliorer vos résultats commerciaux";
+    
+    return value
+      .toLowerCase()
+      .replace(/^on aide|^nous aidons|^j'aide/i, '')
+      .replace(/les équipes|les entreprises|les commerciaux/gi, '')
+      .trim();
+  }
+
+  function reformulateUSP(usp, competitors) {
+    if (!usp) return "Notre approche unique vous permet d'obtenir des résultats mesurables rapidement";
+    
+    const hasCompetitors = competitors && competitors.toLowerCase() !== 'non spécifié';
+    const competitorText = hasCompetitors ? `Contrairement à ${competitors}` : "Contrairement aux solutions classiques";
+    
+    return `${competitorText}, ${usp.toLowerCase()}`;
+  }
+
+  function reformulateForQuestion(pain) {
+    if (!pain) return "ces enjeux";
+    return pain.toLowerCase().replace(/^le |^la |^les |^l'/i, '');
+  }
+
+  function getKPIFromPain(pain) {
+    if (!pain) return "leurs indicateurs clés";
+    
+    const lower = pain.toLowerCase();
+    if (lower.includes('objection')) return "leur taux de conversion";
+    if (lower.includes('closing')) return "leur taux de closing";
+    if (lower.includes('performance')) return "leur performance commerciale";
+    if (lower.includes('temps')) return "leur productivité";
+    
+    return "leurs résultats";
+  }
+
+  function getCycleFromTicket(ticket) {
+    if (!ticket) return "3 mois";
+    if (ticket.includes('< 1 000')) return "1 mois";
+    if (ticket.includes('1 000') || ticket.includes('5 000')) return "2-3 mois";
+    return "3-6 mois";
+  }
+
+  function buildDifferentiation(answers) {
+    const usp = answers.usp || "Notre approche unique";
+    const items = [
+      `✓ ${usp} : Ce qui nous rend vraiment différents sur le marché`,
+    ];
+    
+    if (answers.product_type?.includes('SaaS')) {
+      items.push("✓ Implémentation rapide : Opérationnel en quelques jours, pas plusieurs mois");
+      items.push("✓ ROI mesurable : Tableaux de bord en temps réel pour suivre l'impact");
+    } else if (answers.product_type?.includes('Service')) {
+      items.push("✓ Expertise terrain : Notre équipe a géré ces problématiques des centaines de fois");
+      items.push("✓ Accompagnement personnalisé : Pas de one-size-fits-all, tout est adapté");
+    }
+    
+    items.push(`✓ Support réactif : Une équipe dédiée pour vous accompagner au quotidien`);
+    
+    return items.join('\n');
+  }
+
+  function buildObjectionResponse(objection, answers) {
+    const responses = {
+      '"C\'est trop cher"': `Je comprends que l'investissement soit un sujet. Laissez-moi vous poser une question : combien coûte ${reformulateForQuestion(answers.main_pain)} à votre ${answers.market === 'B2B' ? 'entreprise' : 'activité'} chaque mois ?\n\nSi notre solution permet de réduire ce coût de ne serait-ce que 30%, le retour sur investissement se fait en quelques semaines. C'est moins une dépense qu'un investissement rentable.`,
+      
+      '"On a déjà un outil"': `Parfait, vous avez déjà ${answers.competitors || 'une solution'} en place. Question directe : si c'était 100% satisfaisant, seriez-vous en train de me parler ?\n\nLa plupart de nos clients utilisaient ${answers.competitors || 'un concurrent'} avant. Ce qui les a fait changer ? ${reformulateUSP(answers.usp, answers.competitors)}. Voyons ensemble si ça fait sens pour vous.`,
+      
+      '"Pas le bon moment"': `Je comprends. Par curiosité : qu'est-ce qui ferait que dans 3-6 mois, ce SERAIT le bon moment ?\n\n[Attendre la réponse]\n\nSouvent, "pas le bon moment" signifie que ce n'est pas assez prioritaire. La question est : si ${reformulateForQuestion(answers.main_pain)} persiste 6 mois de plus, quel impact cumulé cela aura-t-il sur vos résultats ?`,
+      
+      '"Pas convaincu du ROI"': `C'est une question légitime. Faisons un calcul rapide ensemble : actuellement, ${reformulateForQuestion(answers.main_pain)} vous coûte combien par mois, approximativement ?\n\n[Calculer ensemble]\n\nNos clients dans ${answers.market} constatent une amélioration de 30-50% en moyenne. Sur votre cas, ça représenterait un gain significatif. Le ROI est là.`,
+      
+      '"Trop compliqué à mettre en place"': `Je comprends cette inquiétude. Justement, on a construit notre solution en pensant à ça. L'implémentation prend ${getCycleFromTicket(answers.ticket)}, pas plusieurs mois.\n\nEt surtout : on vous accompagne à chaque étape. Vous n'êtes pas seul face à un outil complexe.`
+    };
+    
+    return responses[objection] || `Je comprends votre préoccupation. ${objection}\n\nVoici comment nos clients ont surmonté exactement cette même question...`;
+  }
+
+  function buildClosing(answers) {
+    const objectives = {
+      'Obtenir un RDV découverte': `D'après notre échange, ${reformulateForQuestion(answers.main_pain)} mérite qu'on creuse ensemble.\n\nProchaine étape logique : un point de 30 minutes avec notre expert ${answers.product_type} pour voir concrètement comment on s'adapte à votre situation.\n\nVous êtes plutôt disponible mardi ou jeudi cette semaine ?`,
+      
+      'Qualifier le besoin': `Récapitulons : vous avez ${reformulateForQuestion(answers.main_pain)}, ${answers.trigger_events ? `et ${interpretTrigger(answers.trigger_events)}` : 'et cherchez une solution'}.\n\nSur une échelle de 1 à 10, à quel niveau cette problématique est prioritaire pour vous ? [Attendre]\n\nQu'est-ce qui vous aiderait à passer à l'action ?`,
+      
+      'Closer la vente': `On a couvert l'essentiel : vous cherchez à ${interpretValueProp(answers.value_prop)}, ${reformulateForQuestion(answers.main_pain)} est votre blocage principal, et notre solution y répond directement.\n\nSur une échelle de 1 à 10, où vous situez-vous dans votre décision ?\n\n[Si < 8] Qu'est-ce qui vous manque pour arriver à 10 ?`
+    };
+    
+    return objectives[answers.call_objective] || "Quelle serait la prochaine étape logique pour vous ?";
+  }
+
+  function buildFollowUpEmail(answers, painInterpreted, valueInterpreted) {
+    const companyName = answers.company_name || '[Votre entreprise]';
+    
+    return `Objet : Suite à notre échange - ${companyName}\n\nBonjour [Prénom],\n\nMerci pour cet échange de qualité ${answers.channel === 'Téléphone' ? 'au téléphone' : 'ce jour'}.\n\nPour résumer, vous cherchez à ${valueInterpreted}, et votre principal défi est que ${painInterpreted}.\n\nLes 3 points clés à retenir de notre discussion :\n\n1. ${reformulateUSP(answers.usp, answers.competitors)}\n2. Nos clients ${answers.market} constatent des résultats mesurables sous ${getCycleFromTicket(answers.ticket)}\n3. L'implémentation est simple et accompagnée\n\nProchaine étape : ${answers.call_objective}\n\nJe reste disponible si vous avez des questions.\n\nBien à vous,\n[Votre signature]`;
+  }
 
   const copyToClipboard = () => {
     const text = Object.entries(strategy)
@@ -630,4 +752,4 @@ const ScriptLabPro = () => {
   );
 };
 
-export default ScriptLabPro;
+export default App;
