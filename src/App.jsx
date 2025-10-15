@@ -465,17 +465,17 @@ const App = () => {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto pt-8">
-              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group bg-white/5 backdrop-blur-xl">
                 <Phone className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold mb-2 text-lg">Cold Call <span className="italic font-light">ou</span> Qualifié</h3>
                 <p className="text-sm text-white/50 font-light">Stratégie adaptée au contexte de votre appel</p>
               </div>
-              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group bg-white/5 backdrop-blur-xl">
                 <Sparkles className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold mb-2 text-lg"><span className="italic">IA</span> Hyper-personnalisée</h3>
                 <p className="text-sm text-white/50 font-light">Génération basée sur votre contexte <span className="font-semibold">unique</span></p>
               </div>
-              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group bg-white/5 backdrop-blur-xl">
                 <Target className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold mb-2 text-lg">Stratégie <span className="italic">complète</span></h3>
                 <p className="text-sm text-white/50 font-light">Pas juste un script, un <span className="font-semibold">plan d'action</span></p>
@@ -496,7 +496,7 @@ const App = () => {
             <div className="space-y-4">
               {sectionProgress && (
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-3 border border-white/20 px-6 py-3">
+                  <div className="inline-flex items-center gap-3 border border-white/20 px-6 py-3 bg-white/5 backdrop-blur-xl">
                     <span className="text-sm font-bold">
                       Section {sectionProgress.current}/{sectionProgress.total}
                     </span>
@@ -518,9 +518,9 @@ const App = () => {
               </div>
             </div>
 
-            <div className="border border-white/20 p-8">
+            <div className="border border-white/20 p-8 bg-white/5 backdrop-blur-xl">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 border border-white/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 border border-white/20 flex items-center justify-center bg-white/5">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div className="flex-1 pt-2">
@@ -549,7 +549,7 @@ const App = () => {
                       <button
                         key={idx}
                         onClick={() => handleAnswer(optionValue)}
-                        className="w-full text-left p-5 border border-white/20 hover:bg-white hover:text-black transition-all group font-light"
+                        className="w-full text-left p-5 border border-white/20 hover:bg-white hover:text-black transition-all group font-light bg-white/5 backdrop-blur-xl"
                       >
                         <span className="group-hover:font-semibold transition-all">{optionLabel}</span>
                       </button>
@@ -561,7 +561,7 @@ const App = () => {
                       value={textInput}
                       onChange={(e) => setTextInput(e.target.value)}
                       placeholder={question.placeholder}
-                      className="w-full p-5 bg-black border border-white/20 focus:border-white resize-none focus:outline-none text-white placeholder-white/30 font-light"
+                      className="w-full p-5 bg-white/5 backdrop-blur-xl border border-white/20 focus:border-white resize-none focus:outline-none text-white placeholder-white/30 font-light"
                       rows="4"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && e.ctrlKey) {
@@ -586,7 +586,7 @@ const App = () => {
         {stage === 'email' && (
           <div className="max-w-xl mx-auto space-y-8 py-16">
             <div className="text-center space-y-6">
-              <div className="inline-block p-6 border border-white/20">
+              <div className="inline-block p-6 border border-white/20 bg-white/5 backdrop-blur-xl">
                 <Mail className="w-16 h-16" />
               </div>
               <h2 className="text-4xl font-bold">Votre stratégie est <span className="italic font-light">presque</span> prête !</h2>
@@ -601,7 +601,7 @@ const App = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="votre@email.com"
-                className="w-full p-5 bg-black border border-white/20 focus:border-white focus:outline-none text-lg text-white placeholder-white/30 font-light"
+                className="w-full p-5 bg-white/5 backdrop-blur-xl border border-white/20 focus:border-white focus:outline-none text-lg text-white placeholder-white/30 font-light"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     handleEmailSubmit();
@@ -633,7 +633,7 @@ const App = () => {
         {stage === 'result' && strategy && (
           <div className="space-y-10 py-8">
             <div className="text-center space-y-6">
-              <div className="inline-block p-6 border border-white/20">
+              <div className="inline-block p-6 border border-white/20 bg-white/5 backdrop-blur-xl">
                 <Target className="w-16 h-16" />
               </div>
               <h2 className="text-4xl font-bold">Votre stratégie est <span className="italic font-light">prête</span> ! 🎯</h2>
@@ -642,7 +642,7 @@ const App = () => {
               </p>
               <button
                 onClick={copyToClipboard}
-                className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all font-light"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all font-light bg-white/5 backdrop-blur-xl"
               >
                 {copied ? (
                   <>
@@ -658,88 +658,88 @@ const App = () => {
               </button>
             </div>
 
-            <div className="border border-white/20 p-10">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 px-5 py-2 border border-white/20 mb-6">
-                  <Sparkles className="w-5 h-5" />
-                  <span className="text-sm font-light">Passez au <span className="font-bold">niveau supérieur</span></span>
+            <div className="relative -mx-6 py-16 bg-gradient-to-b from-black via-gray-900 to-black">
+              <div className="relative z-10 max-w-6xl mx-auto px-6">
+                <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white mb-8 font-semibold text-sm backdrop-blur-xl shadow-lg">
+                    <Sparkles className="w-5 h-5" />
+                    NIVEAU SUPÉRIEUR
+                  </div>
+                  <h3 className="text-5xl md:text-6xl font-bold mb-6 leading-tight max-w-4xl mx-auto text-white">
+                    Et si vous aviez cette stratégie <span className="italic font-light">en direct</span> pendant vos appels ?
+                  </h3>
+                  <p className="text-xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed">
+                    <span className="font-bold text-white">Sales Whisperer</span> analyse vos conversations en temps réel et vous suggère exactement quoi dire.
+                  </p>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  Et si vous aviez cette stratégie <br/><span className="italic font-light">EN DIRECT</span> pendant vos appels ?
-                </h3>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto font-light">
-                  <span className="font-bold">Sales Whisperer</span> analyse vos conversations <span className="italic">en temps réel</span> et vous suggère <span className="font-semibold">exactement</span> quoi dire.
-                </p>
-              </div>
 
-              <div className="grid md:grid-cols-3 gap-5 mb-10">
-                <div className="md:col-span-2 border border-white/10 p-8 hover:border-white/30 transition-all">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="p-4 border border-white/10">
-                      <Zap className="w-10 h-10" />
+                <div className="grid md:grid-cols-6 gap-6 mb-16">
+                  <div className="md:col-span-4 border-2 border-white/20 p-10 hover:border-blue-400 transition-all bg-black/40 backdrop-blur-2xl">
+                    <div className="flex items-start justify-between mb-8">
+                      <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-xl">
+                        <Zap className="w-12 h-12" />
+                      </div>
+                      <div className="px-4 py-2 bg-green-500 text-white font-bold text-sm shadow-lg">
+                        &lt; 1 seconde
+                      </div>
                     </div>
-                    <div className="text-xs px-4 py-1.5 border border-white/20 font-bold">
-                      En &lt; 1 sec
+                    <h4 className="text-3xl font-bold mb-4 text-white">Insights en temps réel</h4>
+                    <p className="text-white/70 text-lg leading-relaxed">
+                      Obtenez des recommandations claires instantanément. Débloquez chaque situation et finalisez votre closing en toute confiance.
+                    </p>
+                  </div>
+
+                  <div className="md:col-span-2 border-2 border-white/20 p-10 hover:border-purple-400 transition-all bg-black/40 backdrop-blur-2xl">
+                    <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-500 text-white mb-6 w-fit shadow-xl">
+                      <Sparkles className="w-12 h-12" />
                     </div>
+                    <h4 className="text-2xl font-bold mb-4 text-white">Fine Tuning IA</h4>
+                    <p className="text-white/70 leading-relaxed">
+                      IA entraînée sur les meilleures stratégies de vente
+                    </p>
                   </div>
-                  <h4 className="text-xl font-bold mb-3"><span className="italic">Insights</span> en temps réel</h4>
-                  <p className="text-white/60 font-light">
-                    Obtenez des recommandations <span className="font-semibold">claires</span> instantanément. Débloquez chaque situation et finalisez votre closing en toute <span className="italic">confiance</span>.
-                  </p>
+
+                  <div className="md:col-span-2 border-2 border-white/20 p-10 hover:border-green-400 transition-all bg-black/40 backdrop-blur-2xl">
+                    <div className="p-4 bg-gradient-to-br from-green-500 to-emerald-500 text-white mb-6 w-fit shadow-xl">
+                      <TrendingUp className="w-12 h-12" />
+                    </div>
+                    <h4 className="text-2xl font-bold mb-4 text-white">Progression mesurable</h4>
+                    <p className="text-white/70 leading-relaxed">
+                      Stats détaillées et analyses de performance
+                    </p>
+                  </div>
+
+                  <div className="md:col-span-4 border-2 border-white/20 p-10 hover:border-orange-400 transition-all bg-black/40 backdrop-blur-2xl">
+                    <div className="p-4 bg-gradient-to-br from-orange-500 to-red-500 text-white mb-6 w-fit shadow-xl">
+                      <Target className="w-12 h-12" />
+                    </div>
+                    <h4 className="text-3xl font-bold mb-4 text-white">Un copilote intelligent, pas un remplaçant</h4>
+                    <p className="text-white/70 text-lg leading-relaxed">
+                      Renforcez vos performances en argumentant mieux, en rebondissant plus vite et en closant davantage, tout en gardant votre style naturel.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="border border-white/10 p-8 hover:border-white/30 transition-all">
-                  <div className="p-4 border border-white/10 mb-4 w-fit">
-                    <Sparkles className="w-10 h-10" />
-                  </div>
-                  <h4 className="text-lg font-bold mb-3">Fine Tuning <span className="italic">IA</span></h4>
-                  <p className="text-white/60 text-sm font-light">
-                    IA entraînée sur les <span className="font-semibold">meilleures</span> stratégies de vente
-                  </p>
-                </div>
-
-                <div className="border border-white/10 p-8 hover:border-white/30 transition-all">
-                  <div className="p-4 border border-white/10 mb-4 w-fit">
-                    <TrendingUp className="w-10 h-10" />
-                  </div>
-                  <h4 className="text-lg font-bold mb-3">Mesurez votre <span className="italic">progression</span></h4>
-                  <p className="text-white/60 text-sm font-light">
-                    Statistiques <span className="font-semibold">détaillées</span> de vos appels et analyses
-                  </p>
-                </div>
-
-                <div className="md:col-span-2 border border-white/10 p-8 hover:border-white/30 transition-all">
-                  <div className="p-4 border border-white/10 mb-4 w-fit">
-                    <Target className="w-10 h-10" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-3">Un <span className="italic">copilote</span> intelligent, pas un remplaçant</h4>
-                  <p className="text-white/60 font-light">
-                    Renforcez vos performances en argumentant <span className="font-semibold">mieux</span>, en rebondissant plus <span className="font-semibold">vite</span> et en closant <span className="font-semibold">davantage</span>, tout en gardant votre style <span className="italic">naturel</span>.
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center pt-8 border-t border-white/10">
-                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+                <div className="text-center py-12 border-t-2 border-white/20 backdrop-blur-xl bg-black/20">
                   <a
                     href="https://www.saleswhisperer.io/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-10 py-5 bg-white text-black hover:bg-white/90 font-bold transition-all inline-flex items-center gap-3"
+                    className="inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 font-bold text-xl transition-all transform hover:scale-105 shadow-2xl mb-6"
                   >
-                    <Zap className="w-6 h-6" />
-                    Découvrir <span className="italic font-light">Sales Whisperer</span>
+                    <Zap className="w-8 h-8" />
+                    Découvrir Sales Whisperer
                   </a>
-                  <div className="flex items-center gap-2 text-sm text-white/40 font-light">
-                    <Check className="w-4 h-4 text-white" />
-                    <span>Compatible <span className="font-semibold">Google Meet, Teams, Zoom, Salesforce</span>...</span>
+                  <div className="flex items-center justify-center gap-2 text-sm text-white/60">
+                    <Check className="w-5 h-5 text-green-400" />
+                    <span>Compatible <span className="font-semibold text-white">Google Meet · Teams · Zoom · Salesforce</span></span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-8">
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-2xl font-bold flex items-center gap-3">
                   <Phone className="w-7 h-7" />
                   Introduction <span className="font-light italic">({answers.call_type === 'cold' ? 'Cold Call' : 'Call Qualifié'})</span>
@@ -747,11 +747,11 @@ const App = () => {
                 <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.intro}</p>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">🔍 Questions de <span className="italic">Découverte</span></h3>
                 <ul className="space-y-4">
                   {strategy.discovery.map((q, idx) => (
-                    <li key={idx} className="text-white/80 flex items-start gap-4 p-4 border border-white/10 font-light">
+                    <li key={idx} className="text-white/80 flex items-start gap-4 p-4 border border-white/10 font-light bg-white/5 backdrop-blur-xl">
                       <span className="font-bold flex-shrink-0">{idx + 1}.</span>
                       <span>{q}</span>
                     </li>
@@ -759,40 +759,40 @@ const App = () => {
                 </ul>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">💎 Positionnement de <span className="italic">Valeur</span></h3>
                 <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.value_positioning}</p>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">⚔️ Différenciation <span className="italic">Concurrentielle</span></h3>
                 <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.differentiation}</p>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">🛡️ Traitement de l'<span className="italic">Objection Principale</span></h3>
                 <div className="space-y-4">
                   <p className="text-sm text-white/50 font-semibold">{answers.top_objection}</p>
-                  <p className="text-white/80 leading-relaxed whitespace-pre-line border border-white/10 p-6 font-light">
+                  <p className="text-white/80 leading-relaxed whitespace-pre-line border border-white/10 p-6 font-light bg-white/5 backdrop-blur-xl">
                     {strategy.objection_handling[answers.top_objection]}
                   </p>
                 </div>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">✅ <span className="italic">Closing</span> & Prochaines Étapes</h3>
                 <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.closing}</p>
               </div>
 
-              <div className="border border-white/20 p-8 space-y-4">
+              <div className="border border-white/20 p-8 space-y-4 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-xl font-bold">📧 Email de <span className="italic">Suivi</span></h3>
-                <div className="border border-white/10 p-6 font-mono text-sm text-white/70 whitespace-pre-line font-light">
+                <div className="border border-white/10 p-6 font-mono text-sm text-white/70 whitespace-pre-line font-light bg-white/5 backdrop-blur-xl">
                   {strategy.follow_up_email}
                 </div>
               </div>
             </div>
 
-            <div className="border border-white/10 p-8">
+            <div className="border border-white/10 p-8 bg-white/5 backdrop-blur-xl">
               <h4 className="font-bold mb-4 flex items-center gap-2">
                 <Target className="w-5 h-5" />
                 Conseils d'<span className="italic font-light">utilisation</span>
