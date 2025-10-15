@@ -1,40 +1,4 @@
-<div className="grid md:grid-cols-3 gap-4 mb-8">
-                  <div className="md:col-span-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="p-3 bg-white/10 rounded-lg">
-                        <Zap className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="text-xs px-3 py-1 bg-white/10 text-white rounded-full font-semibold">
-                        En &lt; 1 sec
-                      </div>
-                    </div>
-                    <h4 className="text-xl font-bold mb-2 text-white">Insights en temps réel</h4>
-                    <p className="text-white/70">
-                      Obtenez des recommandations claires instantanément. Débloquez chaque situation et finalisez votre closing en toute confiance.
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
-                    <div className="p-3 bg-white/10 rounded-lg mb-4 w-fit">
-                      <Sparkles className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-lg font-bold mb-2 text-white">Fine Tuning IA</h4>
-                    <p className="text-white/70 text-sm">
-                      IA entraînée sur les meilleures stratégies de vente
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
-                    <div className="p-3 bg-white/10 rounded-lg mb-4 w-fit">
-                      <TrendingUp className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-lg font-bold mb-2 text-white">Mesurez votre progression</h4>
-                    <p className="text-white/70 text-sm">
-                      Statistiques détaillées de vos appels et analyses
-                    </p>
-                  </div>
-
-                  <div className="md:col-span-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
+<div className="md:col-span-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
                     <div className="p-3 bg-white/10 rounded-lg mb-4 w-fit">
                       <Target className="w-8 h-8 text-white" />
                     </div>
