@@ -58,58 +58,128 @@ function buildPrompt(answers) {
   const callType = isCold ? 'prospection à froid (cold call)' : 'call qualifié';
   
   return `
-Crée une stratégie commerciale complète et personnalisée pour ce contexte :
+Tu es un expert en stratégie commerciale. Tu dois créer une stratégie ULTRA-PERSONNALISÉE en INTERPRÉTANT et REFORMULANT les informations fournies. 
 
-CONTEXTE DU CALL :
-- Type : ${callType}
-- Canal : ${answers.channel}
-- Objectif : ${answers.call_objective}
+⚠️ RÈGLES CRITIQUES :
+- NE JAMAIS copier-coller textuellement les inputs
+- INTERPRÉTER le contexte et créer des phrases fluides et naturelles
+- SYNTHÉTISER les informations en langage commercial professionnel
+- Utiliser un ton ${answers.tone.toLowerCase()}
+- Parler comme un vrai commercial expert, pas comme un robot
 
-ENTREPRISE :
-- Nom : ${answers.company_name || 'Non spécifié'}
-- Marché : ${answers.market}
-- Solution : ${answers.product_type}
-- Proposition de valeur : ${answers.value_prop}
-- USP : ${answers.usp}
-- Concurrents : ${answers.competitors || 'Non spécifiés'}
-- Ticket moyen : ${answers.ticket || 'Non spécifié'}
-- Cycle de vente : ${answers.cycle_length || 'Non spécifié'}
+CONTEXTE À INTERPRÉTER :
 
-PROSPECT :
-- Titre/Poste : ${answers.prospect_title}
-- Taille entreprise : ${answers.prospect_company_size || 'Non spécifié'}
-- Pain point principal : ${answers.main_pain}
-- Triggers : ${answers.trigger_events}
-- Objection #1 : ${answers.top_objection}
-- Décideur : ${answers.decision_maker || 'Non spécifié'}
+🎯 TYPE DE CALL : ${callType}
+Canal : ${answers.channel}
+Objectif : ${answers.call_objective}
 
-STYLE :
-- Ton : ${answers.tone}
+🏢 ENTREPRISE :
+Nom : ${answers.company_name || '[Entreprise]'}
+Marché : ${answers.market}
+Offre : ${answers.product_type}
+Transformation client : "${answers.value_prop}"
+Différenciation : "${answers.usp}"
+Concurrents : ${answers.competitors || 'concurrents du marché'}
+${answers.ticket ? `Ticket moyen : ${answers.ticket}` : ''}
+${answers.cycle_length ? `Cycle de vente : ${answers.cycle_length}` : ''}
 
-GÉNÈRE une stratégie structurée avec ces sections (utilise exactement ces balises) :
+👤 PROSPECT :
+Poste/Titre : ${answers.prospect_title}
+${answers.prospect_company_size ? `Taille entreprise : ${answers.prospect_company_size}` : ''}
+Pain point identifié : "${answers.main_pain}"
+Triggers d'achat : "${answers.trigger_events}"
+Objection principale : ${answers.top_objection}
+${answers.decision_maker ? `Décideur : ${answers.decision_maker}` : ''}
+
+---
+
+GÉNÈRE une stratégie avec ces sections (balises exactes requises) :
 
 [INTRO]
-${isCold ? 'Accroche cold call percutante (2-3 phrases max) qui capte l\'attention et donne une raison valable de continuer' : 'Accroche call qualifié qui réaffirme l\'intérêt et pose le cadre de l\'échange'}
+${isCold ? 
+`Crée une accroche de cold call en 2-3 phrases NATURELLES qui :
+1. Se présente de façon directe et professionnelle
+2. Donne une RAISON CRÉDIBLE de l'appel (basée sur le pain point "${answers.main_pain}" et les triggers "${answers.trigger_events}")
+3. Demande l'autorisation de continuer
+
+⚠️ INTERDICTIONS :
+- Ne liste pas les triggers mot à mot
+- Ne copie pas "${answers.main_pain}" tel quel
+- Reformule en langage commercial naturel
+
+EXEMPLE DE BON STYLE :
+"Bonjour [Prénom], je suis [Nom] de ${answers.company_name}. J'ai remarqué que beaucoup de [${answers.prospect_title}] dans [secteur] font face à [reformulation intelligente du pain point]. C'est justement notre spécialité d'aider des entreprises comme la vôtre à [bénéfice]. Avez-vous 2 minutes ?"` 
+: 
+`Crée une ouverture de call qualifié qui :
+1. Remercie le prospect
+2. Rappelle brièvement le contexte (sans être lourd)
+3. Pose une question d'ouverture qui engage la découverte
+
+Style conversationnel et professionnel.`}
 
 [DISCOVERY]
-4 questions de découverte puissantes utilisant SPIN (Situation, Problème, Implication, Need-payoff). Une question par ligne.
+Crée 4 questions de découverte SPIN selling :
+1. SITUATION : Question factuelle sur leur contexte actuel
+2. PROBLÈME : Question qui explore "${answers.main_pain}" sans le citer mot à mot
+3. IMPLICATION : Question sur les conséquences du problème
+4. NEED-PAYOFF : Question qui fait visualiser la solution
+
+⚠️ Questions doivent être NATURELLES, pas génériques. Adaptées au secteur ${answers.market} et au poste ${answers.prospect_title}.
 
 [VALUE_POSITIONING]
-Positionnement de valeur clair qui connecte les pain points du prospect à la solution unique de l'entreprise. Utilise la formule : Situation actuelle → Problème → Notre solution → Résultat mesurable.
+Crée un pitch de valeur en 3-4 phrases qui :
+1. Reformule "${answers.value_prop}" en langage impactant
+2. Connecte au pain point "${answers.main_pain}" (reformulé)
+3. Mentionne la différenciation "${answers.usp}" naturellement
+4. Donne un résultat CONCRET et MESURABLE
+
+Ne copie AUCUNE phrase des inputs. Réinterprète tout.
 
 [DIFFERENTIATION]
-Différenciation vs ${answers.competitors || 'concurrents'} en 3-4 points bullet. Sois précis sur ce qui rend ${answers.company_name || 'l\'entreprise'} unique.
+Crée 3-4 bullets de différenciation vs ${answers.competitors || 'concurrents'} :
+- Reformule "${answers.usp}" en avantage concurrentiel clair
+- Ajoute 2-3 autres différenciateurs logiques basés sur ${answers.product_type}
+- Utilise un langage percutant et commercial
+
+Format : "✓ [Avantage] : [Explication concrète en 1 phrase]"
 
 [OBJECTION]
-Réponse complète et structurée à l'objection "${answers.top_objection}". Utilise la méthode : Empathie → Question inversée → Reframe → Preuve/exemple.
+Crée une réponse COMPLÈTE à l'objection ${answers.top_objection} en 4 étapes :
+
+1. EMPATHIE : Valide l'objection sans être condescendant
+2. QUESTION INVERSÉE : Pose une question qui fait réfléchir
+3. REFRAME : Change l'angle de vue (coût vs investissement, timing vs opportunité, etc.)
+4. PREUVE : Mini-exemple ou stat qui renforce
+
+Longueur : 4-6 phrases. Style : ${answers.tone.toLowerCase()}.
 
 [CLOSING]
-Technique de closing adaptée à l'objectif "${answers.call_objective}". Sois direct et propose une action concrète.
+Crée une technique de closing pour "${answers.call_objective}" qui :
+- Récapitule brièvement (1 phrase)
+- Pose une question de closing directe
+- Propose une NEXT STEP concrète avec choix (dates, format, etc.)
+
+Ne sois pas hésitant. Sois assumé et direct.
 
 [EMAIL]
-Email de suivi professionnel (objet + corps). Format prêt à copier-coller.
+Crée un email de suivi en 3 parties :
 
-Génère du contenu ACTIONNABLE, pas de théorie. Sois précis et utilise les informations fournies.
+**OBJET** : Court et intrigant (8-12 mots max)
+
+**CORPS** :
+1. Rappel personnalisé de l'échange (1-2 phrases)
+2. 3 points clés de valeur (bullets)
+3. Call-to-action clair avec proposition de créneaux
+
+Ton : professionnel mais pas corporate. Humain.
+
+---
+
+⚠️ RAPPEL FINAL : 
+- ZÉRO copier-coller des inputs
+- TOUT doit sonner naturel et fluide
+- Parle comme un top 1% sales rep
+- Adapte le vocabulaire au niveau ${answers.market} ${answers.product_type}
 `;
 }
 
