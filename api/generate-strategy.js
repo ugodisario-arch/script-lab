@@ -6,15 +6,30 @@ const groq = new Groq({
 });
 
 export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { answers, email } = req.body;
 
+  console.log('=== Début génération stratégie ===');
+  console.log('Email:', email);
+  console.log('Entreprise:', answers.company_name);
+
   try {
     // Construire le prompt pour Groq
     const prompt = buildPrompt(answers);
+
+    console.log('Appel Groq API...');
 
     // Appeler Groq pour générer la stratégie
     const completion = await groq.chat.completions.create({
@@ -33,22 +48,34 @@ export default async function handler(req, res) {
       max_tokens: 3000,
     });
 
+    console.log('Groq API réponse OK');
+
     const strategyText = completion.choices[0]?.message?.content;
     const strategy = parseStrategy(strategyText, answers);
 
+    console.log('Stratégie parsée');
+
     // Envoyer email à ugo@saleswhisperer.io
+    console.log('Envoi email notification...');
     await sendEmailNotification(answers, email, strategy);
 
-    // Envoyer email au prospect (optionnel)
+    // Envoyer email au prospect
+    console.log('Envoi email prospect...');
     await sendProspectEmail(email, strategy, answers);
+
+    console.log('=== Fin génération stratégie ===');
 
     res.status(200).json({ strategy });
 
   } catch (error) {
-    console.error('Erreur:', error);
+    console.error('=== ERREUR ===');
+    console.error('Message:', error.message);
+    console.error('Stack:', error.stack);
+    
     res.status(500).json({ 
       error: 'Erreur lors de la génération',
-      fallback: true 
+      fallback: true,
+      details: error.message
     });
   }
 }
@@ -64,7 +91,7 @@ Tu es un expert en stratégie commerciale. Tu dois créer une stratégie ULTRA-P
 - NE JAMAIS copier-coller textuellement les inputs
 - INTERPRÉTER le contexte et créer des phrases fluides et naturelles
 - SYNTHÉTISER les informations en langage commercial professionnel
-- Utiliser un ton ${answers.tone.toLowerCase()}
+- Utiliser un ton ${answers.tone?.toLowerCase() || 'professionnel'}
 - Parler comme un vrai commercial expert, pas comme un robot
 
 CONTEXTE À INTERPRÉTER :
@@ -151,7 +178,7 @@ Crée une réponse COMPLÈTE à l'objection ${answers.top_objection} en 4 étape
 3. REFRAME : Change l'angle de vue (coût vs investissement, timing vs opportunité, etc.)
 4. PREUVE : Mini-exemple ou stat qui renforce
 
-Longueur : 4-6 phrases. Style : ${answers.tone.toLowerCase()}.
+Longueur : 4-6 phrases. Style : ${answers.tone?.toLowerCase() || 'professionnel'}.
 
 [CLOSING]
 Crée une technique de closing pour "${answers.call_objective}" qui :
@@ -184,10 +211,9 @@ Ton : professionnel mais pas corporate. Humain.
 }
 
 function parseStrategy(text, answers) {
-  // Parser le texte généré par Groq
   const sections = {
     intro: extractSection(text, 'INTRO'),
-    discovery: extractSection(text, 'DISCOVERY').split('\n').filter(q => q.trim()),
+    discovery: extractSection(text, 'DISCOVERY').split('\n').filter(q => q.trim() && q.length > 10),
     value_positioning: extractSection(text, 'VALUE_POSITIONING'),
     differentiation: extractSection(text, 'DIFFERENTIATION'),
     objection_handling: {
@@ -207,15 +233,16 @@ function extractSection(text, section) {
 }
 
 async function sendEmailNotification(answers, prospectEmail, strategy) {
-  // Utiliser Resend ou autre service
   const resendApiKey = process.env.RESEND_API_KEY;
   
   if (!resendApiKey) {
-    console.log('Pas de clé Resend configurée');
+    console.log('⚠️ Pas de clé Resend configurée');
     return;
   }
 
   try {
+    console.log('📧 Envoi email à ugo@saleswhisperer.io...');
+    
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -223,7 +250,7 @@ async function sendEmailNotification(answers, prospectEmail, strategy) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Script Lab <noreply@saleswhisperer.io>',
+        from: 'Script Lab <onboarding@resend.dev>',
         to: 'ugo@saleswhisperer.io',
         subject: `🎯 Nouveau lead Script Lab - ${answers.company_name || 'Lead intéressé'}`,
         html: `
@@ -263,28 +290,37 @@ async function sendEmailNotification(answers, prospectEmail, strategy) {
       })
     });
 
+    const result = await response.json();
+    
     if (!response.ok) {
-      console.error('Erreur Resend:', await response.text());
+      console.error('❌ Erreur Resend:', result);
+    } else {
+      console.log('✅ Email notification envoyé:', result.id);
     }
   } catch (error) {
-    console.error('Erreur envoi email:', error);
+    console.error('❌ Erreur envoi email notification:', error.message);
   }
 }
 
 async function sendProspectEmail(email, strategy, answers) {
   const resendApiKey = process.env.RESEND_API_KEY;
   
-  if (!resendApiKey) return;
+  if (!resendApiKey) {
+    console.log('⚠️ Pas de clé Resend pour email prospect');
+    return;
+  }
 
   try {
-    await fetch('https://api.resend.com/emails', {
+    console.log('📧 Envoi email au prospect:', email);
+    
+    const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Script Lab <noreply@saleswhisperer.io>',
+        from: 'Script Lab <onboarding@resend.dev>',
         to: email,
         subject: `Votre stratégie commerciale personnalisée - ${answers.company_name || 'Script Lab'}`,
         html: `
@@ -294,7 +330,7 @@ async function sendProspectEmail(email, strategy, answers) {
           
           <p>Voici votre stratégie commerciale complète et personnalisée basée sur votre contexte unique.</p>
           
-          <p><strong>⚠️ Cette stratégie est accessible directement sur la page de résultats. Conservez ce lien !</strong></p>
+          <p><strong>⚠️ Cette stratégie est accessible directement sur la page de résultats. Conservez-la !</strong></p>
           
           <hr>
           
@@ -310,7 +346,7 @@ async function sendProspectEmail(email, strategy, answers) {
             <li>✅ Insights post-call</li>
           </ul>
           
-          <p><a href="https://www.saleswhisperer.io/" style="display: inline-block; padding: 12px 24px; background: #3B82F6; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Découvrir Sales Whisperer</a></p>
+          <p><a href="https://www.saleswhisperer.io/" style="display: inline-block; padding: 12px 24px; background: #3B82F6; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 16px;">Découvrir Sales Whisperer</a></p>
           
           <hr>
           
@@ -320,7 +356,15 @@ async function sendProspectEmail(email, strategy, answers) {
         `
       })
     });
+
+    const result = await response.json();
+    
+    if (!response.ok) {
+      console.error('❌ Erreur email prospect:', result);
+    } else {
+      console.log('✅ Email prospect envoyé:', result.id);
+    }
   } catch (error) {
-    console.error('Erreur envoi email prospect:', error);
+    console.error('❌ Erreur envoi email prospect:', error.message);
   }
 }
