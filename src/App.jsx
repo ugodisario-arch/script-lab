@@ -447,9 +447,9 @@ const App = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-900/30 to-slate-950/80"></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10">
-        <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+        </header>
+
+        <main className="max-w-4xl mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold flex items-center gap-2">
@@ -827,6 +827,7 @@ const App = () => {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 };
