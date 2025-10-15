@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check } from 'lucide-react';
+import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check, TrendingUp } from 'lucide-react';
 
 const App = () => {
   const [stage, setStage] = useState('intro');
@@ -349,7 +349,7 @@ const App = () => {
 
   function getCycleFromTicket(ticket) {
     if (!ticket) return "3 mois";
-    if (ticket.includes('< 1 000')) return "1 mois";
+    if (ticket.includes('< 1 000') || ticket.includes('&lt; 1 000')) return "1 mois";
     if (ticket.includes('1 000') || ticket.includes('5 000')) return "2-3 mois";
     return "3-6 mois";
   }
@@ -634,123 +634,110 @@ const App = () => {
 
         {stage === 'result' && strategy && (
           <div className="space-y-8 py-8">
-            {/* Hero CTA Sales Whisperer - EN PREMIER */}
-            <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl p-8 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/10 rounded-full -ml-24 -mb-24 blur-2xl"></div>
-              
-              <div className="relative z-10 space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <Zap className="w-8 h-8 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-blue-200 font-medium">Passez au niveau supérieur</div>
-                    <h3 className="text-2xl font-bold text-white">Cette stratégie est puissante...</h3>
-                  </div>
+            <div className="text-center space-y-4">
+              <div className="inline-block p-4 bg-green-500/10 rounded-full">
+                <Target className="w-12 h-12 text-green-400" />
+              </div>
+              <h2 className="text-3xl font-bold">Votre stratégie est prête ! 🎯</h2>
+              <p className="text-slate-300">
+                Envoyée à <span className="text-blue-400">{email}</span>
+              </p>
+              <button
+                onClick={copyToClipboard}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>Copié !</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    <span>Copier toute la stratégie</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full mb-4">
+                  <Sparkles className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm font-semibold text-blue-400">Passez au niveau supérieur</span>
                 </div>
-                
-                <p className="text-xl text-blue-50 leading-relaxed">
-                  <strong>Mais imaginez avoir tout ça EN DIRECT pendant vos appels.</strong> Sales Whisperer analyse la conversation en temps réel et vous suggère exactement quoi dire, quand le dire.
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">
+                  Et si vous aviez cette stratégie EN DIRECT pendant vos appels ?
+                </h3>
+                <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+                  Sales Whisperer analyse vos conversations en temps réel et vous suggère exactement quoi dire.
                 </p>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4 py-4">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-green-500/20 rounded">
-                        <Check className="w-5 h-5 text-green-300" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white mb-1">Suggestions instantanées</div>
-                        <div className="text-sm text-blue-100">Réponses aux objections en < 1 seconde</div>
-                      </div>
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <div className="md:col-span-2 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 border border-blue-500/30 rounded-xl p-6 hover:border-blue-500/50 transition-all">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-3 bg-blue-500/20 rounded-lg">
+                      <Zap className="w-8 h-8 text-blue-400" />
+                    </div>
+                    <div className="text-xs px-3 py-1 bg-green-500/20 text-green-400 rounded-full font-semibold">
+                      En &lt; 1 sec
                     </div>
                   </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-green-500/20 rounded">
-                        <Check className="w-5 h-5 text-green-300" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white mb-1">Analyse en direct</div>
-                        <div className="text-sm text-blue-100">Détecte le sentiment et les signaux d'achat</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-green-500/20 rounded">
-                        <Check className="w-5 h-5 text-green-300" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white mb-1">Jamais pris au dépourvu</div>
-                        <div className="text-sm text-blue-100">Base de connaissance + vos scripts</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-green-500/20 rounded">
-                        <Check className="w-5 h-5 text-green-300" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white mb-1">Coaching post-call</div>
-                        <div className="text-sm text-blue-100">Analytics et points d'amélioration</div>
-                      </div>
-                    </div>
-                  </div>
+                  <h4 className="text-xl font-bold mb-2 text-white">Insights en temps réel</h4>
+                  <p className="text-slate-300">
+                    Obtenez des recommandations claires instantanément. Débloquez chaque situation et finalisez votre closing en toute confiance.
+                  </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-6 hover:border-purple-500/50 transition-all">
+                  <div className="p-3 bg-purple-500/20 rounded-lg mb-4 w-fit">
+                    <Sparkles className="w-8 h-8 text-purple-400" />
+                  </div>
+                  <h4 className="text-lg font-bold mb-2 text-white">Fine Tuning IA</h4>
+                  <p className="text-slate-300 text-sm">
+                    IA entraînée sur les meilleures stratégies de vente
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-6 hover:border-green-500/50 transition-all">
+                  <div className="p-3 bg-green-500/20 rounded-lg mb-4 w-fit">
+                    <TrendingUp className="w-8 h-8 text-green-400" />
+                  </div>
+                  <h4 className="text-lg font-bold mb-2 text-white">Mesurez votre progression</h4>
+                  <p className="text-slate-300 text-sm">
+                    Statistiques détaillées de vos appels et analyses
+                  </p>
+                </div>
+
+                <div className="md:col-span-2 bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 hover:border-orange-500/50 transition-all">
+                  <div className="p-3 bg-orange-500/20 rounded-lg mb-4 w-fit">
+                    <Target className="w-8 h-8 text-orange-400" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-2 text-white">Un copilote intelligent, pas un remplaçant</h4>
+                  <p className="text-slate-300">
+                    Renforcez vos performances en argumentant mieux, en rebondissant plus vite et en closant davantage, tout en gardant votre style naturel.
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center pt-4 border-t border-slate-700">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
                   <a
                     href="https://www.saleswhisperer.io/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-8 py-4 bg-white text-blue-700 font-bold rounded-lg hover:bg-blue-50 transition-all text-center text-lg shadow-xl hover:shadow-2xl hover:scale-105 transform"
+                    className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
                   >
-                    🚀 Découvrir Sales Whisperer
+                    <Zap className="w-5 h-5" />
+                    Découvrir Sales Whisperer
                   </a>
-                  <button
-                    onClick={copyToClipboard}
-                    className="px-6 py-4 bg-blue-800/50 hover:bg-blue-800 backdrop-blur-sm font-semibold rounded-lg transition-colors inline-flex items-center justify-center gap-2 border border-white/20"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="w-5 h-5 text-green-400" />
-                        <span>Copié !</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-5 h-5" />
-                        <span>Copier le script</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                <div className="flex items-center gap-2 text-sm text-blue-100 pt-2">
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/20"></div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 border-2 border-white/20"></div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white/20"></div>
+                  <div className="flex items-center gap-2 text-sm text-slate-400">
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>Compatible Google Meet, Teams, Zoom, Salesforce...</span>
                   </div>
-                  <span>Rejoignez les commerciaux qui closent 40% de plus</span>
                 </div>
               </div>
-            </div>
-
-            {/* Titre de la stratégie */}
-            <div className="text-center space-y-4 pt-4">
-              <div className="inline-block p-4 bg-green-500/10 rounded-full">
-                <Target className="w-12 h-12 text-green-400" />
-              </div>
-              <h2 className="text-3xl font-bold">Votre stratégie commerciale personnalisée</h2>
-              <p className="text-slate-300">
-                Envoyée à <span className="text-blue-400">{email}</span>
-              </p>
             </div>
 
             <div className="space-y-6">
@@ -807,89 +794,7 @@ const App = () => {
               </div>
             </div>
 
-            {/* Comparaison Avant/Après */}
-            <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-8">
-              <h3 className="text-2xl font-bold text-center mb-8">La différence Sales Whisperer</h3>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
-                      <span className="text-2xl">😰</span>
-                    </div>
-                    <div>
-                      <div className="font-bold text-red-400">Sans Sales Whisperer</div>
-                      <div className="text-sm text-slate-400">Vente traditionnelle</div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 p-3 bg-slate-900/50 rounded">
-                      <span className="text-red-400 mt-1">✗</span>
-                      <span className="text-sm text-slate-300">Objection inattendue → stress → réponse approximative</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-slate-900/50 rounded">
-                      <span className="text-red-400 mt-1">✗</span>
-                      <span className="text-sm text-slate-300">Oubli de points clés pendant l'appel</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-slate-900/50 rounded">
-                      <span className="text-red-400 mt-1">✗</span>
-                      <span className="text-sm text-slate-300">Analyse post-call manuelle et chronophage</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-slate-900/50 rounded">
-                      <span className="text-red-400 mt-1">✗</span>
-                      <span className="text-sm text-slate-300">Apprentissage lent par essai-erreur</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                      <span className="text-2xl">🚀</span>
-                    </div>
-                    <div>
-                      <div className="font-bold text-green-400">Avec Sales Whisperer</div>
-                      <div className="text-sm text-slate-400">Vente augmentée par l'IA</div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 p-3 bg-green-900/20 rounded border border-green-500/20">
-                      <span className="text-green-400 mt-1">✓</span>
-                      <span className="text-sm text-slate-200">Réponse suggérée instantanément → confiance → closing</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-green-900/20 rounded border border-green-500/20">
-                      <span className="text-green-400 mt-1">✓</span>
-                      <span className="text-sm text-slate-200">IA vous rappelle les points clés au bon moment</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-green-900/20 rounded border border-green-500/20">
-                      <span className="text-green-400 mt-1">✓</span>
-                      <span className="text-sm text-slate-200">Insights automatiques + actions recommandées</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 bg-green-900/20 rounded border border-green-500/20">
-                      <span className="text-green-400 mt-1">✓</span>
-                      <span className="text-sm text-slate-200">Progression mesurée + coaching personnalisé</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 text-center">
-                <a
-                  href="https://www.saleswhisperer.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg"
-                >
-                  <Zap className="w-5 h-5" />
-                  Passer à la vente augmentée
-                </a>
-              </div>
-            </div>
-
-            {/* Contenu de la stratégie */}
-            <div className="space-y-6">
+            <div className="bg-slate-800/30 border border-slate-700 rounded-lg p-6">
               <h4 className="font-bold mb-3 text-slate-200 flex items-center gap-2">
                 <Target className="w-5 h-5 text-blue-400" />
                 Conseils d'utilisation
