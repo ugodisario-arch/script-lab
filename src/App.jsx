@@ -528,12 +528,12 @@ const App = () => {
               </button>
             )}
             <a 
-              href="https://www.saleswhisperer.io/" 
+              href="https://tally.so/r/wdv5ZN" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-sm hover:text-white/70 transition-colors group text-white/60"
             >
-              <span className="font-light">Découvrir</span> <span className="font-bold group-hover:underline">Sales Whisperer</span> →
+              <span className="font-light">Rejoindre la</span> <span className="font-bold group-hover:underline">Waitlist</span> →
             </a>
           </div>
         </div>
@@ -749,9 +749,8 @@ const App = () => {
               </button>
             </div>
 
-            {/* Sales Whisperer Promo - Dark Subtle with animated orbs */}
+            {/* Sales Whisperer Promo */}
             <div className="relative rounded-3xl overflow-hidden mb-16 border border-white/20">
-              {/* Animated orbs background */}
               <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mix-blend-lighten filter blur-3xl opacity-40 animate-pulse"></div>
                 <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full mix-blend-lighten filter blur-3xl opacity-40 animate-pulse" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
@@ -776,9 +775,7 @@ const App = () => {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6 mb-12">
-                  {/* Card 1 - avec glow lumineux derrière */}
                   <div className="relative rounded-2xl overflow-visible group">
-                    {/* Glow effect derrière le glass */}
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
                     <div className="relative rounded-2xl overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-50"></div>
@@ -795,9 +792,7 @@ const App = () => {
                     </div>
                   </div>
 
-                  {/* Card 2 */}
                   <div className="relative rounded-2xl overflow-visible group">
-                    {/* Glow effect derrière le glass */}
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-300 opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
                     <div className="relative rounded-2xl overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent opacity-50"></div>
@@ -814,9 +809,7 @@ const App = () => {
                     </div>
                   </div>
 
-                  {/* Card 3 */}
                   <div className="relative rounded-2xl overflow-visible group">
-                    {/* Glow effect derrière le glass */}
                     <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-white opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
                     <div className="relative rounded-2xl overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-transparent to-transparent opacity-50"></div>
@@ -835,15 +828,25 @@ const App = () => {
                 </div>
 
                 <div className="text-center pt-8 border-t border-white/10">
-                  <a
-                    href="https://www.saleswhisperer.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-12 py-6 rounded-xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 border border-blue-400/30 hover:border-blue-400/50 font-bold text-xl transition-all transform hover:scale-105 mb-6 text-white/90 backdrop-blur-xl"
-                  >
-                    <Zap className="w-8 h-8" />
-                    Découvrir Sales Whisperer
-                  </a>
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+                    <a
+                      href="https://tally.so/r/wdv5ZN"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3 px-12 py-6 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border border-blue-400/50 hover:border-blue-300 font-bold text-xl transition-all transform hover:scale-105 text-white shadow-lg shadow-blue-500/25"
+                    >
+                      <Zap className="w-8 h-8" />
+                      Rejoindre la Waitlist
+                    </a>
+                    <a
+                      href="https://www.saleswhisperer.io/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 font-semibold text-lg transition-all text-white/90 backdrop-blur-xl"
+                    >
+                      En savoir plus →
+                    </a>
+                  </div>
                   <div className="flex items-center justify-center gap-2 text-sm text-white/40">
                     <Check className="w-5 h-5" />
                     <span>Compatible <span className="font-semibold text-white/60">Meet · Teams · Zoom · Salesforce</span></span>
