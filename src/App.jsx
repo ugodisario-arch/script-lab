@@ -795,7 +795,7 @@ const App = () => {
             <div className="border border-white/10 p-8 bg-white/5 backdrop-blur-xl">
               <h4 className="font-bold mb-4 flex items-center gap-2">
                 <Target className="w-5 h-5" />
-                Conseils d'<span className="italic font-light">utilisation</span>
+                Conseils d'utilisation
               </h4>
               <ul className="space-y-3 text-sm text-white/60 font-light">
                 <li>• <span className="font-semibold">Personnalisez</span> chaque élément selon le prospect spécifique</li>
