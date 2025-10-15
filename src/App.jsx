@@ -1,109 +1,4 @@
-<div className="md:col-span-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
-                    <div className="p-3 bg-white/10 rounded-lg mb-4 w-fit">
-                      <Target className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-xl font-bold mb-2 text-white">Un copilote intelligent, pas un remplaçant</h4>
-                    <p className="text-white/70">
-                      Renforcez vos performances en argumentant mieux, en rebondissant plus vite et en closant davantage, tout en gardant votre style naturel.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-center pt-4 border-t border-white/10">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-                    <a
-                      href="https://www.saleswhisperer.io/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-8 py-4 bg-white text-black hover:bg-white/90 font-bold rounded-lg transition-all shadow-2xl transform hover:scale-105 inline-flex items-center gap-2"
-                    >
-                      <Zap className="w-5 h-5" />
-                      Découvrir Sales Whisperer
-                    </a>
-                    <div className="flex items-center gap-2 text-sm text-white/60">
-                      <Check className="w-4 h-4 text-white" />
-                      <span>Compatible Google Meet, Teams, Zoom, Salesforce...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                    <Phone className="w-6 h-6" />
-                    Introduction {answers.call_type === 'cold' ? '(Cold Call)' : '(Call Qualifié)'}
-                  </h3>
-                  <p className="text-white/80 leading-relaxed whitespace-pre-line">{strategy.intro}</p>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">🔍 Questions de Découverte</h3>
-                  <ul className="space-y-3">
-                    {strategy.discovery.map((q, idx) => (
-                      <li key={idx} className="text-white/80 flex items-start gap-3 p-3 bg-white/5 rounded">
-                        <span className="text-white font-bold flex-shrink-0">{idx + 1}.</span>
-                        <span>{q}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">💎 Positionnement de Valeur</h3>
-                  <p className="text-white/80 leading-relaxed whitespace-pre-line">{strategy.value_positioning}</p>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">⚔️ Différenciation Concurrentielle</h3>
-                  <p className="text-white/80 leading-relaxed whitespace-pre-line">{strategy.differentiation}</p>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">🛡️ Traitement de l'Objection Principale</h3>
-                  <div className="space-y-3">
-                    <p className="text-sm text-white/60 font-medium">{answers.top_objection}</p>
-                    <p className="text-white/80 leading-relaxed whitespace-pre-line bg-white/5 p-4 rounded">
-                      {strategy.objection_handling[answers.top_objection]}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">✅ Closing & Prochaines Étapes</h3>
-                  <p className="text-white/80 leading-relaxed whitespace-pre-line">{strategy.closing}</p>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white">📧 Email de Suivi</h3>
-                  <div className="bg-white/5 p-4 rounded font-mono text-sm text-white/70 whitespace-pre-line">
-                    {strategy.follow_up_email}
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
-                <h4 className="font-bold mb-3 text-white flex items-center gap-2">
-                  <Target className="w-5 h-5" />
-                  Conseils d'utilisation
-                </h4>
-                <ul className="space-y-2 text-sm text-white/70">
-                  <li>• Personnalisez chaque élément selon le prospect spécifique</li>
-                  <li>• Pratiquez à voix haute avant vos appels importants</li>
-                  <li>• Adaptez le ton selon les réactions de votre interlocuteur</li>
-                  <li>• Utilisez cette stratégie comme guide, pas comme script rigide</li>
-                  <li>• Prenez des notes pendant le call pour affiner votre approche</li>
-                </ul>
-              </div>
-            </div>
-          )}
-        </main>
-      </div>
-    </div>
-  );
-};
-
-export default App;import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check, TrendingUp } from 'lucide-react';
 
 const App = () => {
@@ -536,402 +431,383 @@ const App = () => {
   const sectionProgress = stage === 'questions' ? getSectionProgress() : null;
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Video Background */}
-      <div className="fixed inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-50 grayscale"
-        >
-          <source src="https://framerusercontent.com/assets/1g8IkhtJmlWcC4zEYWKUmeGWzI.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        <header className="border-b border-white/5 bg-black/30 backdrop-blur-xl sticky top-0 z-50">
-          <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold flex items-center gap-2 text-white">
-                <Sparkles className="w-5 h-5 text-white" />
-                Script Lab PRO
-              </h1>
-              <p className="text-xs text-white/60">by Sales Whisperer</p>
-            </div>
-            <a 
-              href="https://www.saleswhisperer.io/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-sm text-white/80 hover:text-white transition-colors"
-            >
-              Découvrir Sales Whisperer →
-            </a>
+    <div className="min-h-screen bg-black text-white">
+      <header className="border-b border-white/10 sticky top-0 z-50 bg-black/80 backdrop-blur-xl">
+        <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">
+              Script Lab <span className="font-light italic">PRO</span>
+            </h1>
+            <p className="text-xs text-white/50 mt-0.5">by <span className="font-semibold">Sales Whisperer</span></p>
           </div>
-        </header>
+          <a 
+            href="https://www.saleswhisperer.io/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-sm hover:text-white/70 transition-colors group"
+          >
+            <span className="font-light">Découvrir</span> <span className="font-bold group-hover:underline">Sales Whisperer</span> →
+          </a>
+        </div>
+      </header>
 
-        <main className="max-w-4xl mx-auto px-4 py-8 text-white">
-          {stage === 'intro' && (
-            <div className="text-center space-y-8 py-12">
-              <div className="inline-block p-4 bg-blue-500/10 rounded-full backdrop-blur-sm">
-                <Target className="w-16 h-16 text-blue-400" />
-              </div>
-              
-              <div className="space-y-4">
-                <h2 className="text-4xl font-bold">Créez votre stratégie commerciale sur-mesure</h2>
-                <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-                  En 5 minutes, obtenez une stratégie complète adaptée à votre entreprise et votre prospect.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto pt-8">
-                <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-lg border border-slate-700">
-                  <Phone className="w-8 h-8 text-blue-400 mb-3" />
-                  <h3 className="font-semibold mb-2">Cold Call ou Qualifié</h3>
-                  <p className="text-sm text-slate-400">Stratégie adaptée au contexte de votre appel</p>
-                </div>
-                <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-lg border border-slate-700">
-                  <Zap className="w-8 h-8 text-blue-400 mb-3" />
-                  <h3 className="font-semibold mb-2">IA Hyper-personnalisée</h3>
-                  <p className="text-sm text-slate-400">Génération basée sur votre contexte unique</p>
-                </div>
-                <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-lg border border-slate-700">
-                  <Target className="w-8 h-8 text-blue-400 mb-3" />
-                  <h3 className="font-semibold mb-2">Stratégie complète</h3>
-                  <p className="text-sm text-slate-400">Pas juste un script, un plan d'action</p>
-                </div>
-              </div>
-
-              <button
-                onClick={handleStart}
-                className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg font-semibold text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20"
-              >
-                Commencer l'analyse
-              </button>
-            </div>
-          )}
-
-          {stage === 'questions' && question && (
-            <div className="space-y-6 py-8">
-              <div className="space-y-4">
-                {sectionProgress && (
-                  <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl px-4 py-2 rounded-full border border-white/10">
-                      <span className="text-sm font-medium text-white">
-                        Section {sectionProgress.current}/{sectionProgress.total}
-                      </span>
-                      <span className="text-white/40">·</span>
-                      <span className="text-sm text-white/80">{sectionProgress.name}</span>
-                    </div>
-                  </div>
-                )}
-                
-                <div className="flex justify-between text-sm text-white/60">
-                  <span>Question {currentQuestion + 1} sur {filteredQuestions.length}</span>
-                  <span>{Math.round(progress)}%</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-white transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20">
-                    <Sparkles className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-lg leading-relaxed">
-                      {isTyping ? (
-                        <span className="inline-flex gap-1">
-                          <span className="animate-pulse">•</span>
-                          <span className="animate-pulse" style={{animationDelay: '0.2s'}}>•</span>
-                          <span className="animate-pulse" style={{animationDelay: '0.4s'}}>•</span>
-                        </span>
-                      ) : (
-                        question.text
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {!isTyping && (
-                <div className="space-y-3">
-                  {question.type === 'choice' ? (
-                    question.options.map((option, idx) => {
-                      const optionValue = typeof option === 'object' ? option.value : option;
-                      const optionLabel = typeof option === 'object' ? option.label : option;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswer(optionValue)}
-                          className="w-full text-left p-4 bg-white/5 backdrop-blur-xl hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg transition-all group"
-                        >
-                          <span className="group-hover:text-white transition-colors text-white/90">{optionLabel}</span>
-                        </button>
-                      );
-                    })
-                  ) : (
-                    <div className="space-y-3">
-                      <textarea
-                        value={textInput}
-                        onChange={(e) => setTextInput(e.target.value)}
-                        placeholder={question.placeholder}
-                        className="w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 focus:border-white/30 rounded-lg resize-none focus:outline-none text-white placeholder-white/40"
-                        rows="3"
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' && e.ctrlKey) {
-                            handleTextSubmit();
-                          }
-                        }}
-                      />
-                      <button
-                        onClick={handleTextSubmit}
-                        disabled={!textInput.trim()}
-                        className="w-full p-4 bg-white text-black hover:bg-white/90 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Continuer <Send className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-
-          {stage === 'email' && (
-            <div className="max-w-xl mx-auto space-y-6 py-12">
-              <div className="text-center space-y-4">
-                <div className="inline-block p-4 bg-white/5 backdrop-blur-xl rounded-full border border-white/10">
-                  <Mail className="w-12 h-12 text-white" />
-                </div>
-                <h2 className="text-3xl font-bold text-white">Votre stratégie est presque prête !</h2>
-                <p className="text-white/70">
-                  Entrez votre email pour recevoir votre stratégie commerciale complète et personnalisée.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="votre@email.com"
-                  className="w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 focus:border-white/30 rounded-lg focus:outline-none text-lg text-white placeholder-white/40"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleEmailSubmit();
-                    }
-                  }}
-                />
-                <button
-                  onClick={handleEmailSubmit}
-                  disabled={isGenerating || !email.includes('@')}
-                  className="w-full p-4 bg-white text-black hover:bg-white/90 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isGenerating ? (
-                    <>
-                      <Sparkles className="w-5 h-5 animate-spin" />
-                      Génération de votre stratégie...
-                    </>
-                  ) : (
-                    'Générer ma stratégie'
-                  )}
-                </button>
-              </div>
-
-              <p className="text-xs text-center text-white/40">
-                🔒 Vos données sont sécurisées. Stratégie envoyée par email + accessible immédiatement.
+      <main className="max-w-4xl mx-auto px-6 py-12">
+        {stage === 'intro' && (
+          <div className="text-center space-y-12 py-16">
+            <div className="space-y-6">
+              <h2 className="text-5xl font-bold leading-tight">
+                Créez votre stratégie <br/>
+                <span className="italic font-light">commerciale</span> sur-mesure
+              </h2>
+              <p className="text-xl text-white/60 max-w-2xl mx-auto font-light">
+                En <span className="font-bold">5 minutes</span>, obtenez une stratégie <span className="italic">complète</span> adaptée à votre entreprise et votre prospect.
               </p>
             </div>
-          )}
 
-          {stage === 'result' && strategy && (
-            <div className="space-y-8 py-8">
-              <div className="text-center space-y-4">
-                <div className="inline-block p-4 bg-white/5 backdrop-blur-xl rounded-full border border-white/10">
-                  <Target className="w-12 h-12 text-white" />
+            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto pt-8">
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+                <Phone className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold mb-2 text-lg">Cold Call <span className="italic font-light">ou</span> Qualifié</h3>
+                <p className="text-sm text-white/50 font-light">Stratégie adaptée au contexte de votre appel</p>
+              </div>
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+                <Sparkles className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold mb-2 text-lg"><span className="italic">IA</span> Hyper-personnalisée</h3>
+                <p className="text-sm text-white/50 font-light">Génération basée sur votre contexte <span className="font-semibold">unique</span></p>
+              </div>
+              <div className="border border-white/10 p-8 hover:border-white/30 transition-all group">
+                <Target className="w-10 h-10 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold mb-2 text-lg">Stratégie <span className="italic">complète</span></h3>
+                <p className="text-sm text-white/50 font-light">Pas juste un script, un <span className="font-semibold">plan d'action</span></p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleStart}
+              className="mt-12 px-10 py-5 bg-white text-black hover:bg-white/90 font-bold text-lg transition-all transform hover:scale-105"
+            >
+              Commencer l'analyse
+            </button>
+          </div>
+        )}
+
+        {stage === 'questions' && question && (
+          <div className="space-y-8 py-8">
+            <div className="space-y-4">
+              {sectionProgress && (
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center gap-3 border border-white/20 px-6 py-3">
+                    <span className="text-sm font-bold">
+                      Section {sectionProgress.current}/{sectionProgress.total}
+                    </span>
+                    <span className="text-white/30">·</span>
+                    <span className="text-sm font-light italic">{sectionProgress.name}</span>
+                  </div>
                 </div>
-                <h2 className="text-3xl font-bold text-white">Votre stratégie est prête ! 🎯</h2>
-                <p className="text-white/70">
-                  Envoyée à <span className="text-white">{email}</span>
+              )}
+              
+              <div className="flex justify-between text-sm text-white/40 font-light">
+                <span>Question <span className="font-semibold">{currentQuestion + 1}</span> sur {filteredQuestions.length}</span>
+                <span className="font-bold">{Math.round(progress)}%</span>
+              </div>
+              <div className="h-0.5 bg-white/10 overflow-hidden">
+                <div 
+                  className="h-full bg-white transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="border border-white/20 p-8">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 border border-white/20 flex items-center justify-center">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div className="flex-1 pt-2">
+                  <p className="text-xl leading-relaxed font-light">
+                    {isTyping ? (
+                      <span className="inline-flex gap-1">
+                        <span className="animate-pulse">•</span>
+                        <span className="animate-pulse" style={{animationDelay: '0.2s'}}>•</span>
+                        <span className="animate-pulse" style={{animationDelay: '0.4s'}}>•</span>
+                      </span>
+                    ) : (
+                      question.text
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {!isTyping && (
+              <div className="space-y-3">
+                {question.type === 'choice' ? (
+                  question.options.map((option, idx) => {
+                    const optionValue = typeof option === 'object' ? option.value : option;
+                    const optionLabel = typeof option === 'object' ? option.label : option;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswer(optionValue)}
+                        className="w-full text-left p-5 border border-white/20 hover:bg-white hover:text-black transition-all group font-light"
+                      >
+                        <span className="group-hover:font-semibold transition-all">{optionLabel}</span>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <div className="space-y-3">
+                    <textarea
+                      value={textInput}
+                      onChange={(e) => setTextInput(e.target.value)}
+                      placeholder={question.placeholder}
+                      className="w-full p-5 bg-black border border-white/20 focus:border-white resize-none focus:outline-none text-white placeholder-white/30 font-light"
+                      rows="4"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && e.ctrlKey) {
+                          handleTextSubmit();
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={handleTextSubmit}
+                      disabled={!textInput.trim()}
+                      className="w-full p-5 bg-white text-black hover:bg-white/90 font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      Continuer <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {stage === 'email' && (
+          <div className="max-w-xl mx-auto space-y-8 py-16">
+            <div className="text-center space-y-6">
+              <div className="inline-block p-6 border border-white/20">
+                <Mail className="w-16 h-16" />
+              </div>
+              <h2 className="text-4xl font-bold">Votre stratégie est <span className="italic font-light">presque</span> prête !</h2>
+              <p className="text-lg text-white/50 font-light">
+                Entrez votre email pour recevoir votre stratégie <span className="font-semibold">commerciale complète</span> et personnalisée.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="votre@email.com"
+                className="w-full p-5 bg-black border border-white/20 focus:border-white focus:outline-none text-lg text-white placeholder-white/30 font-light"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleEmailSubmit();
+                  }
+                }}
+              />
+              <button
+                onClick={handleEmailSubmit}
+                disabled={isGenerating || !email.includes('@')}
+                className="w-full p-5 bg-white text-black hover:bg-white/90 font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                {isGenerating ? (
+                  <>
+                    <Sparkles className="w-5 h-5 animate-spin" />
+                    <span className="font-light">Génération de votre</span> stratégie...
+                  </>
+                ) : (
+                  'Générer ma stratégie'
+                )}
+              </button>
+            </div>
+
+            <p className="text-xs text-center text-white/40 font-light">
+              🔒 Vos données sont <span className="font-semibold">sécurisées</span>. Stratégie envoyée par email + accessible immédiatement.
+            </p>
+          </div>
+        )}
+
+        {stage === 'result' && strategy && (
+          <div className="space-y-10 py-8">
+            <div className="text-center space-y-6">
+              <div className="inline-block p-6 border border-white/20">
+                <Target className="w-16 h-16" />
+              </div>
+              <h2 className="text-4xl font-bold">Votre stratégie est <span className="italic font-light">prête</span> ! 🎯</h2>
+              <p className="text-white/50 font-light">
+                Envoyée à <span className="font-semibold text-white">{email}</span>
+              </p>
+              <button
+                onClick={copyToClipboard}
+                className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all font-light"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    <span className="font-semibold">Copié !</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-5 h-5" />
+                    <span>Copier <span className="font-semibold">toute</span> la stratégie</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="border border-white/20 p-10">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-2 px-5 py-2 border border-white/20 mb-6">
+                  <Sparkles className="w-5 h-5" />
+                  <span className="text-sm font-light">Passez au <span className="font-bold">niveau supérieur</span></span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold mb-4">
+                  Et si vous aviez cette stratégie <br/><span className="italic font-light">EN DIRECT</span> pendant vos appels ?
+                </h3>
+                <p className="text-white/60 text-lg max-w-2xl mx-auto font-light">
+                  <span className="font-bold">Sales Whisperer</span> analyse vos conversations <span className="italic">en temps réel</span> et vous suggère <span className="font-semibold">exactement</span> quoi dire.
                 </p>
-                <button
-                  onClick={copyToClipboard}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 backdrop-blur-xl hover:bg-white/10 rounded-lg transition-colors border border-white/10"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 text-white" />
-                      <span className="text-white">Copié !</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4 text-white" />
-                      <span className="text-white">Copier toute la stratégie</span>
-                    </>
-                  )}
-                </button>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4 border border-white/10">
-                    <Sparkles className="w-4 h-4 text-white" />
-                    <span className="text-sm font-semibold text-white">Passez au niveau supérieur</span>
+              <div className="grid md:grid-cols-3 gap-5 mb-10">
+                <div className="md:col-span-2 border border-white/10 p-8 hover:border-white/30 transition-all">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-4 border border-white/10">
+                      <Zap className="w-10 h-10" />
+                    </div>
+                    <div className="text-xs px-4 py-1.5 border border-white/20 font-bold">
+                      En &lt; 1 sec
+                    </div>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">
-                    Et si vous aviez cette stratégie EN DIRECT pendant vos appels ?
-                  </h3>
-                  <p className="text-white/70 text-lg max-w-2xl mx-auto">
-                    Sales Whisperer analyse vos conversations en temps réel et vous suggère exactement quoi dire.
+                  <h4 className="text-xl font-bold mb-3"><span className="italic">Insights</span> en temps réel</h4>
+                  <p className="text-white/60 font-light">
+                    Obtenez des recommandations <span className="font-semibold">claires</span> instantanément. Débloquez chaque situation et finalisez votre closing en toute <span className="italic">confiance</span>.
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-4 mb-8">
-                  <div className="md:col-span-2 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 border border-blue-500/30 rounded-xl p-6 hover:border-blue-500/50 transition-all">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="p-3 bg-blue-500/20 rounded-lg">
-                        <Zap className="w-8 h-8 text-blue-400" />
-                      </div>
-                      <div className="text-xs px-3 py-1 bg-green-500/20 text-green-400 rounded-full font-semibold">
-                        En &lt; 1 sec
-                      </div>
-                    </div>
-                    <h4 className="text-xl font-bold mb-2 text-white">Insights en temps réel</h4>
-                    <p className="text-slate-300">
-                      Obtenez des recommandations claires instantanément. Débloquez chaque situation et finalisez votre closing en toute confiance.
-                    </p>
+                <div className="border border-white/10 p-8 hover:border-white/30 transition-all">
+                  <div className="p-4 border border-white/10 mb-4 w-fit">
+                    <Sparkles className="w-10 h-10" />
                   </div>
-
-                  <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-6 hover:border-purple-500/50 transition-all">
-                    <div className="p-3 bg-purple-500/20 rounded-lg mb-4 w-fit">
-                      <Sparkles className="w-8 h-8 text-purple-400" />
-                    </div>
-                    <h4 className="text-lg font-bold mb-2 text-white">Fine Tuning IA</h4>
-                    <p className="text-slate-300 text-sm">
-                      IA entraînée sur les meilleures stratégies de vente
-                    </p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-6 hover:border-green-500/50 transition-all">
-                    <div className="p-3 bg-green-500/20 rounded-lg mb-4 w-fit">
-                      <TrendingUp className="w-8 h-8 text-green-400" />
-                    </div>
-                    <h4 className="text-lg font-bold mb-2 text-white">Mesurez votre progression</h4>
-                    <p className="text-slate-300 text-sm">
-                      Statistiques détaillées de vos appels et analyses
-                    </p>
-                  </div>
-
-                  <div className="md:col-span-2 bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-6 hover:border-orange-500/50 transition-all">
-                    <div className="p-3 bg-orange-500/20 rounded-lg mb-4 w-fit">
-                      <Target className="w-8 h-8 text-orange-400" />
-                    </div>
-                    <h4 className="text-xl font-bold mb-2 text-white">Un copilote intelligent, pas un remplaçant</h4>
-                    <p className="text-slate-300">
-                      Renforcez vos performances en argumentant mieux, en rebondissant plus vite et en closant davantage, tout en gardant votre style naturel.
-                    </p>
-                  </div>
+                  <h4 className="text-lg font-bold mb-3">Fine Tuning <span className="italic">IA</span></h4>
+                  <p className="text-white/60 text-sm font-light">
+                    IA entraînée sur les <span className="font-semibold">meilleures</span> stratégies de vente
+                  </p>
                 </div>
 
-                <div className="text-center pt-4 border-t border-slate-700">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-                    <a
-                      href="https://www.saleswhisperer.io/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
-                    >
-                      <Zap className="w-5 h-5" />
-                      Découvrir Sales Whisperer
-                    </a>
-                    <div className="flex items-center gap-2 text-sm text-slate-400">
-                      <Check className="w-4 h-4 text-green-400" />
-                      <span>Compatible Google Meet, Teams, Zoom, Salesforce...</span>
-                    </div>
+                <div className="border border-white/10 p-8 hover:border-white/30 transition-all">
+                  <div className="p-4 border border-white/10 mb-4 w-fit">
+                    <TrendingUp className="w-10 h-10" />
                   </div>
+                  <h4 className="text-lg font-bold mb-3">Mesurez votre <span className="italic">progression</span></h4>
+                  <p className="text-white/60 text-sm font-light">
+                    Statistiques <span className="font-semibold">détaillées</span> de vos appels et analyses
+                  </p>
+                </div>
+
+                <div className="md:col-span-2 border border-white/10 p-8 hover:border-white/30 transition-all">
+                  <div className="p-4 border border-white/10 mb-4 w-fit">
+                    <Target className="w-10 h-10" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-3">Un <span className="italic">copilote</span> intelligent, pas un remplaçant</h4>
+                  <p className="text-white/60 font-light">
+                    Renforcez vos performances en argumentant <span className="font-semibold">mieux</span>, en rebondissant plus <span className="font-semibold">vite</span> et en closant <span className="font-semibold">davantage</span>, tout en gardant votre style <span className="italic">naturel</span>.
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-6">
-                <div className="bg-gradient-to-br from-blue-900/50 to-slate-800/50 backdrop-blur-sm border border-blue-700/50 rounded-lg p-6 space-y-4">
-                  <h3 className="text-2xl font-bold text-blue-400 flex items-center gap-2">
-                    <Phone className="w-6 h-6" />
-                    Introduction {answers.call_type === 'cold' ? '(Cold Call)' : '(Call Qualifié)'}
-                  </h3>
-                  <p className="text-slate-200 leading-relaxed whitespace-pre-line">{strategy.intro}</p>
-                </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">🔍 Questions de Découverte</h3>
-                  <ul className="space-y-3">
-                    {strategy.discovery.map((q, idx) => (
-                      <li key={idx} className="text-slate-200 flex items-start gap-3 p-3 bg-slate-900/50 rounded">
-                        <span className="text-blue-400 font-bold flex-shrink-0">{idx + 1}.</span>
-                        <span>{q}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">💎 Positionnement de Valeur</h3>
-                  <p className="text-slate-200 leading-relaxed whitespace-pre-line">{strategy.value_positioning}</p>
-                </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">⚔️ Différenciation Concurrentielle</h3>
-                  <p className="text-slate-200 leading-relaxed whitespace-pre-line">{strategy.differentiation}</p>
-                </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">🛡️ Traitement de l'Objection Principale</h3>
-                  <div className="space-y-3">
-                    <p className="text-sm text-slate-400 font-medium">{answers.top_objection}</p>
-                    <p className="text-slate-200 leading-relaxed whitespace-pre-line bg-slate-900/50 p-4 rounded">
-                      {strategy.objection_handling[answers.top_objection]}
-                    </p>
+              <div className="text-center pt-8 border-t border-white/10">
+                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+                  <a
+                    href="https://www.saleswhisperer.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-10 py-5 bg-white text-black hover:bg-white/90 font-bold transition-all inline-flex items-center gap-3"
+                  >
+                    <Zap className="w-6 h-6" />
+                    Découvrir <span className="italic font-light">Sales Whisperer</span>
+                  </a>
+                  <div className="flex items-center gap-2 text-sm text-white/40 font-light">
+                    <Check className="w-4 h-4 text-white" />
+                    <span>Compatible <span className="font-semibold">Google Meet, Teams, Zoom, Salesforce</span>...</span>
                   </div>
                 </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">✅ Closing & Prochaines Étapes</h3>
-                  <p className="text-slate-200 leading-relaxed whitespace-pre-line">{strategy.closing}</p>
-                </div>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-blue-400">📧 Email de Suivi</h3>
-                  <div className="bg-slate-900/50 p-4 rounded font-mono text-sm text-slate-300 whitespace-pre-line">
-                    {strategy.follow_up_email}
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700 rounded-lg p-6">
-                <h4 className="font-bold mb-3 text-slate-200 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-blue-400" />
-                  Conseils d'utilisation
-                </h4>
-                <ul className="space-y-2 text-sm text-slate-300">
-                  <li>• Personnalisez chaque élément selon le prospect spécifique</li>
-                  <li>• Pratiquez à voix haute avant vos appels importants</li>
-                  <li>• Adaptez le ton selon les réactions de votre interlocuteur</li>
-                  <li>• Utilisez cette stratégie comme guide, pas comme script rigide</li>
-                  <li>• Prenez des notes pendant le call pour affiner votre approche</li>
-                </ul>
               </div>
             </div>
-          )}
-        </main>
-      </div>
+
+            <div className="space-y-8">
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-2xl font-bold flex items-center gap-3">
+                  <Phone className="w-7 h-7" />
+                  Introduction <span className="font-light italic">({answers.call_type === 'cold' ? 'Cold Call' : 'Call Qualifié'})</span>
+                </h3>
+                <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.intro}</p>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">🔍 Questions de <span className="italic">Découverte</span></h3>
+                <ul className="space-y-4">
+                  {strategy.discovery.map((q, idx) => (
+                    <li key={idx} className="text-white/80 flex items-start gap-4 p-4 border border-white/10 font-light">
+                      <span className="font-bold flex-shrink-0">{idx + 1}.</span>
+                      <span>{q}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">💎 Positionnement de <span className="italic">Valeur</span></h3>
+                <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.value_positioning}</p>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">⚔️ Différenciation <span className="italic">Concurrentielle</span></h3>
+                <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.differentiation}</p>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">🛡️ Traitement de l'<span className="italic">Objection Principale</span></h3>
+                <div className="space-y-4">
+                  <p className="text-sm text-white/50 font-semibold">{answers.top_objection}</p>
+                  <p className="text-white/80 leading-relaxed whitespace-pre-line border border-white/10 p-6 font-light">
+                    {strategy.objection_handling[answers.top_objection]}
+                  </p>
+                </div>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">✅ <span className="italic">Closing</span> & Prochaines Étapes</h3>
+                <p className="text-white/80 leading-relaxed whitespace-pre-line font-light">{strategy.closing}</p>
+              </div>
+
+              <div className="border border-white/20 p-8 space-y-4">
+                <h3 className="text-xl font-bold">📧 Email de <span className="italic">Suivi</span></h3>
+                <div className="border border-white/10 p-6 font-mono text-sm text-white/70 whitespace-pre-line font-light">
+                  {strategy.follow_up_email}
+                </div>
+              </div>
+            </div>
+
+            <div className="border border-white/10 p-8">
+              <h4 className="font-bold mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5" />
+                Conseils d'<span className="italic font-light">utilisation</span>
+              </h4>
+              <ul className="space-y-3 text-sm text-white/60 font-light">
+                <li>• <span className="font-semibold">Personnalisez</span> chaque élément selon le prospect spécifique</li>
+                <li>• Pratiquez à <span className="italic">voix haute</span> avant vos appels importants</li>
+                <li>• Adaptez le <span className="font-semibold">ton</span> selon les réactions de votre interlocuteur</li>
+                <li>• Utilisez cette stratégie comme <span className="italic">guide</span>, pas comme script rigide</li>
+                <li>• Prenez des <span className="font-semibold">notes</span> pendant le call pour affiner votre approche</li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 };
