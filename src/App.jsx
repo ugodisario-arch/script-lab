@@ -447,6 +447,26 @@ const App = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-900/30 to-slate-950/80"></div>
       </div>
 
+      {/* Content */}
+      <div className="relative z-10">
+        <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-bold flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-blue-400" />
+                Script Lab PRO
+              </h1>
+              <p className="text-xs text-slate-400">by Sales Whisperer</p>
+            </div>
+            <a 
+              href="https://www.saleswhisperer.io/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Découvrir Sales Whisperer →
+            </a>
+          </div>
         </header>
 
         <main className="max-w-4xl mx-auto px-4 py-8">
@@ -823,6 +843,7 @@ const App = () => {
                 <li>• Utilisez cette stratégie comme guide, pas comme script rigide</li>
                 <li>• Prenez des notes pendant le call pour affiner votre approche</li>
               </ul>
+            </div>
             </div>
           </div>
         )}
