@@ -225,6 +225,34 @@ const App = () => {
     }
   };
 
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setIsTyping(true);
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion - 1);
+        setIsTyping(false);
+      }, 300);
+    }
+  };
+
+  const handleSkip = () => {
+    const filteredQuestions = getFilteredQuestions();
+    
+    if (currentQuestion < filteredQuestions.length - 1) {
+      setIsTyping(true);
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion + 1);
+        setIsTyping(false);
+      }, 300);
+    } else {
+      setIsTyping(true);
+      setTimeout(() => {
+        setStage('email');
+        setIsTyping(false);
+      }, 300);
+    }
+  };
+
   const handleTextSubmit = () => {
     if (textInput.trim()) {
       handleAnswer(textInput);
@@ -467,9 +495,16 @@ const App = () => {
               href="https://tally.so/r/wdv5ZN" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm hover:text-white/70 transition-colors group text-white/60"
+              className="group"
+              title="Rejoindre la waitlist de Sales Whisperer - IA en temps réel pour vos appels"
             >
-              <span className="font-light">Rejoindre la</span> <span className="font-bold group-hover:underline">Waitlist</span> →
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 border border-blue-500/20 hover:border-blue-500/40 transition-all">
+                <Sparkles className="w-4 h-4 text-blue-400" />
+                <span className="text-sm">
+                  <span className="text-white/60">Waitlist</span>{' '}
+                  <span className="font-bold text-white/90 group-hover:text-white">Sales Whisperer</span>
+                </span>
+              </div>
             </a>
           </div>
         </div>
@@ -539,6 +574,25 @@ const App = () => {
                   className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
+              </div>
+
+              {/* Navigation buttons */}
+              <div className="flex items-center justify-between pt-2">
+                <button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  className="text-sm text-white/40 hover:text-white/70 transition-colors flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <ChevronDown className="w-4 h-4 rotate-90" />
+                  <span>Précédent</span>
+                </button>
+                <button
+                  onClick={handleSkip}
+                  className="text-sm text-white/40 hover:text-white/70 transition-colors flex items-center gap-2"
+                >
+                  <span>Passer</span>
+                  <ChevronDown className="w-4 h-4 -rotate-90" />
+                </button>
               </div>
             </div>
 
