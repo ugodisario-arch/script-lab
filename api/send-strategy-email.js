@@ -244,7 +244,7 @@ function generateEmailHTML(strategy, answers, salesWhispererCTA) {
   <div class="email-container">
     <!-- Header -->
     <div class="header">
-      <h1>📋 Votre Stratégie Commerciale</h1>
+      <h1>Votre Stratégie Commerciale</h1>
       <p>Générée par Script Lab PRO</p>
     </div>
 
@@ -258,7 +258,7 @@ function generateEmailHTML(strategy, answers, salesWhispererCTA) {
 
       <!-- Introduction Section -->
       <div class="section">
-        <h2 class="section-title">🎯 Introduction</h2>
+        <h2 class="section-title">Introduction</h2>
         <div class="section-content">${strategy.intro || 'Contenu non disponible'}</div>
       </div>
 
