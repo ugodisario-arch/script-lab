@@ -13,6 +13,11 @@ export default async function handler(req, res) {
 
   try {
     const { to, subject, strategy, answers, salesWhispererCTA } = req.body;
+    // Nettoyer le nom de l'entreprise
+const cleanCompanyName = (answers.company_name || 'votre entreprise')
+  .replace(/\n/g, ' ')
+  .replace(/\r/g, ' ')
+  .trim();
 
     // Générer le HTML de l'email
     const emailHtml = generateEmailHTML(strategy, answers, salesWhispererCTA);
@@ -21,7 +26,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: 'Ugo - Script Lab PRO <ugo@saleswhisperer.io>',
       to: [to],
-      subject: `Votre stratégie pour ${answers.company_name || 'votre entreprise'}`, // Sujet sans emoji
+      subject: `Votre stratégie pour ${(answers.company_name || 'votre entreprise').replace(/\n/g, ' ').trim()}`,
       html: emailHtml,
     });
 
