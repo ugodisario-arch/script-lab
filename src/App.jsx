@@ -21,8 +21,6 @@ const App = () => {
     email: true
   });
 
-
-
   const questions = [
     {
       id: 'call_type',
@@ -264,12 +262,10 @@ const App = () => {
     if (email && email.includes('@')) {
       setIsGenerating(true);
       
-      // Générer la stratégie
       const generatedStrategy = generateFallbackStrategy();
       setStrategy(generatedStrategy);
       
       try {
-        // Préparer les données pour l'email
         const emailData = {
           to: email,
           subject: `🎯 Votre stratégie commerciale personnalisée - ${answers.company_name || 'Script Lab PRO'}`,
@@ -282,48 +278,6 @@ const App = () => {
           }
         };
         
-        /* 
-        Template d'email recommandé pour votre backend :
-        
-        Subject: 🎯 Votre stratégie commerciale personnalisée - [Company Name]
-        
-        Bonjour,
-        
-        Votre stratégie commerciale personnalisée est prête ! 
-        
-        📋 VOTRE CONTEXTE :
-        - Type d'appel : [Cold/Qualifié]
-        - Entreprise : [Company Name]
-        - Prospect : [Prospect Title]
-        - Objectif : [Call Objective]
-        
-        [Inclure les sections de la stratégie formatées en HTML]
-        
-        ---
-        
-        🚀 PASSEZ AU NIVEAU SUPÉRIEUR
-        
-        Imaginez avoir cette stratégie en temps réel pendant vos appels...
-        
-        Sales Whisperer analyse vos conversations et vous suggère exactement quoi dire,
-        au moment précis où vous en avez besoin.
-        
-        [CTA Button: Rejoindre la Waitlist Sales Whisperer]
-        Link: https://tally.so/r/wdv5ZN
-        
-        ✓ Temps réel : Insights en moins d'1 seconde
-        ✓ IA Fine-Tuned : Sur les meilleures stratégies
-        ✓ Analytics : Progression mesurable
-        
-        Compatible avec Meet, Teams, Zoom, Salesforce
-        
-        ---
-        
-        Bonne vente ! 💪
-        L'équipe Script Lab PRO
-        */
-        
-        // Envoi à votre API backend
         const response = await fetch('/api/send-strategy-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -338,7 +292,6 @@ const App = () => {
         
       } catch (error) {
         console.error('❌ Erreur:', error);
-        // Continue quand même pour afficher la stratégie
       } finally {
         setStage('result');
         setIsGenerating(false);
@@ -531,7 +484,6 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Subtle animated gradient orbs background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-blue-900/20 to-cyan-900/20 rounded-full mix-blend-lighten filter blur-3xl opacity-30 animate-pulse"></div>
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-sky-900/20 to-blue-900/20 rounded-full mix-blend-lighten filter blur-3xl opacity-30 animate-pulse" style={{animationDelay: '2s'}}></div>
@@ -632,7 +584,6 @@ const App = () => {
                 />
               </div>
 
-              {/* Navigation buttons */}
               <div className="flex items-center justify-between pt-2">
                 <button
                   onClick={handlePrevious}
@@ -766,7 +717,6 @@ const App = () => {
 
         {stage === 'result' && strategy && (
           <div className="space-y-8 py-8">
-            {/* Hero Section */}
             <div className="text-center space-y-6 mb-12">
               <div className="inline-block p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10">
                 <Target className="w-16 h-16 text-white/90" />
@@ -795,115 +745,97 @@ const App = () => {
               </button>
             </div>
 
-            {/* Sales Whisperer Promo */}
-            <div className="relative rounded-3xl overflow-hidden mb-16 border border-white/20">
-              <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mix-blend-lighten filter blur-3xl opacity-40 animate-pulse"></div>
-                <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full mix-blend-lighten filter blur-3xl opacity-40 animate-pulse" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
-                <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-gradient-to-r from-blue-400 to-sky-300 rounded-full mix-blend-lighten filter blur-3xl opacity-35 animate-pulse" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
-                <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-white to-blue-300 rounded-full mix-blend-lighten filter blur-3xl opacity-30 animate-pulse" style={{animationDelay: '3s', animationDuration: '6s'}}></div>
+            {/* NOUVEAU BENTO CTA - CARTES NOIRES GLASSMORPHISME */}
+            <div className="mb-16">
+              <div className="text-center mb-12">
+                <div className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-lg shadow-blue-500/30">
+                  Passez au niveau supérieur
+                </div>
+                <h3 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+                  Et si vous aviez ces insights<br />
+                  <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    en temps réel ?
+                  </span>
+                </h3>
+                <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                  Sales Whisperer analyse vos conversations et vous suggère exactement quoi dire au moment précis où vous en avez besoin.
+                </p>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-950/50 via-blue-950/50 to-slate-950/50"></div>
-              <div className="absolute inset-0 backdrop-blur-xl"></div>
-              
-              <div className="relative z-10 p-12">
-                <div className="text-center mb-12">
-                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-blue-400/30 text-blue-200 mb-8 font-semibold text-sm">
-                    <Sparkles className="w-5 h-5" />
-                    NIVEAU SUPÉRIEUR
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                {/* Card 1 - Orange */}
+                <div className="group relative bg-black rounded-3xl p-8 border border-white/10 hover:border-white/30 transition-all duration-500 hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-orange-500/20">
+                  <div className="relative w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 p-[1px] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <div className="w-full h-full rounded-2xl bg-black/50 backdrop-blur-xl flex items-center justify-center border border-white/20 shadow-inner">
+                      <span className="text-4xl filter drop-shadow-lg">🎯</span>
+                    </div>
                   </div>
-                  <h3 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-white">
-                    Et si vous aviez cette stratégie <span className="italic font-light text-white/70">en direct</span> ?
-                  </h3>
-                  <p className="text-xl text-white/60 max-w-3xl mx-auto font-light leading-relaxed">
-                    <span className="font-bold text-white/90">Sales Whisperer</span> analyse vos conversations en temps réel et vous suggère exactement quoi dire.
+                  <h4 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
+                    Temps Réel
+                  </h4>
+                  <p className="text-gray-400 text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Recevez des suggestions pendant vos appels
                   </p>
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-500 to-amber-500 opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-500 -z-10"></div>
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 mb-12">
-                  {/* Card 1 - Temps réel */}
-                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-blue-600 to-blue-800 shadow-2xl shadow-blue-500/30">
-                    <div className="relative p-10 h-full">
-                      {/* Icon container */}
-                      <div className="mb-6">
-                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
-                          <Zap className="w-12 h-12 text-white drop-shadow-lg" />
-                        </div>
-                      </div>
-                      
-                      <h4 className="text-3xl font-bold mb-4 text-white">Temps réel</h4>
-                      <p className="text-blue-100 text-lg leading-relaxed">
-                        Insights en moins d'1 seconde pendant vos appels
-                      </p>
+                {/* Card 2 - Blue */}
+                <div className="group relative bg-black rounded-3xl p-8 border border-white/10 hover:border-white/30 transition-all duration-500 hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-blue-500/20">
+                  <div className="relative w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 p-[1px] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <div className="w-full h-full rounded-2xl bg-black/50 backdrop-blur-xl flex items-center justify-center border border-white/20 shadow-inner">
+                      <span className="text-4xl filter drop-shadow-lg">🧠</span>
                     </div>
                   </div>
-
-                  {/* Card 2 - IA Fine-Tuned */}
-                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-cyan-600 to-cyan-800 shadow-2xl shadow-cyan-500/30">
-                    <div className="relative p-10 h-full">
-                      {/* Icon container */}
-                      <div className="mb-6">
-                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
-                          <Sparkles className="w-12 h-12 text-white drop-shadow-lg" />
-                        </div>
-                      </div>
-                      
-                      <h4 className="text-3xl font-bold mb-4 text-white">IA Fine-Tuned</h4>
-                      <p className="text-cyan-100 text-lg leading-relaxed">
-                        Entraînée sur les meilleures stratégies de vente
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Card 3 - Analytics */}
-                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-sky-600 to-sky-800 shadow-2xl shadow-sky-500/30">
-                    <div className="relative p-10 h-full">
-                      {/* Icon container */}
-                      <div className="mb-6">
-                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
-                          <TrendingUp className="w-12 h-12 text-white drop-shadow-lg" />
-                        </div>
-                      </div>
-                      
-                      <h4 className="text-3xl font-bold mb-4 text-white">Analytics</h4>
-                      <p className="text-sky-100 text-lg leading-relaxed">
-                        Stats détaillées et progression mesurable
-                      </p>
-                    </div>
-                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
+                    IA Fine-Tuned
+                  </h4>
+                  <p className="text-gray-400 text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Entraînée sur 10,000+ appels de vente
+                  </p>
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-500 -z-10"></div>
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
 
-                <div className="text-center pt-8 border-t border-white/10">
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
-                    <a
-                      href="https://tally.so/r/wdv5ZN"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 px-12 py-6 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border border-blue-400/50 hover:border-blue-300 font-bold text-xl transition-all transform hover:scale-105 text-white shadow-lg shadow-blue-500/25"
-                    >
-                      <Zap className="w-8 h-8" />
-                      Rejoindre la Waitlist
-                    </a>
-                    <a
-                      href="https://www.saleswhisperer.io/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 font-semibold text-lg transition-all text-white/90 backdrop-blur-xl"
-                    >
-                      En savoir plus →
-                    </a>
+                {/* Card 3 - Yellow */}
+                <div className="group relative bg-black rounded-3xl p-8 border border-white/10 hover:border-white/30 transition-all duration-500 hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-yellow-500/20">
+                  <div className="relative w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-400 p-[1px] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <div className="w-full h-full rounded-2xl bg-black/50 backdrop-blur-xl flex items-center justify-center border border-white/20 shadow-inner">
+                      <span className="text-4xl filter drop-shadow-lg">📊</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-center gap-2 text-sm text-white/40">
-                    <Check className="w-5 h-5" />
-                    <span>Compatible <span className="font-semibold text-white/60">Meet · Teams · Zoom · Salesforce</span></span>
-                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
+                    Analytics
+                  </h4>
+                  <p className="text-gray-400 text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Dashboards et insights détaillés
+                  </p>
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-yellow-400 to-orange-400 opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-500 -z-10"></div>
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
+              </div>
+
+              <div className="text-center space-y-6">
+                <a
+                  href="https://tally.so/r/wdv5ZN"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 text-white px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/40 hover:scale-105 transition-all duration-300 group relative overflow-hidden"
+                >
+                  <span className="relative z-10">Rejoindre la Waitlist Sales Whisperer</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+                <p className="text-gray-500 text-sm font-medium flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  Compatible Meet, Teams, Zoom, Salesforce
+                </p>
               </div>
             </div>
 
             {/* Strategy Sections */}
             <div className="space-y-6">
-              {/* Introduction */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -935,7 +867,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Discovery Questions */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -967,7 +898,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Value Positioning */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -994,7 +924,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Differentiation */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -1021,7 +950,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Objection Handling */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -1053,7 +981,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Closing */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -1080,7 +1007,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Email */}
               <div className="relative rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-transparent"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
@@ -1108,7 +1034,6 @@ const App = () => {
               </div>
             </div>
 
-            {/* Tips */}
             <div className="relative rounded-2xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent"></div>
               <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
