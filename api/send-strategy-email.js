@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: 'Ugo - Script Lab PRO <ugo@saleswhisperer.io>',
       to: [to],
-      subject: `Votre stratégie pour ${answers.company_name || 'votre entreprise'}`, // Sujet sans emoji
+      subject: subject || `Votre stratégie pour ${answers.company_name || 'votre entreprise'}`,
       html: emailHtml,
     });
 
@@ -41,342 +41,302 @@ export default async function handler(req, res) {
 
 function generateEmailHTML(strategy, answers, salesWhispererCTA) {
   const companyName = answers.company_name || 'votre entreprise';
-  const callType = answers.call_type === 'cold' ? 'Cold Call' : 'Call Qualifié';
   
   return `
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votre Stratégie Commerciale</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: #f8fafc;
+      background-color: #f5f5f5;
+      padding: 20px;
       line-height: 1.6;
     }
-    .email-wrapper {
-      background-color: #f8fafc;
-      padding: 40px 20px;
-    }
-    .email-content {
-      max-width: 600px;
+    .email-container {
+      max-width: 680px;
       margin: 0 auto;
       background-color: #ffffff;
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .header {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      padding: 32px;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      color: #ffffff;
+      padding: 40px 32px;
       text-align: center;
+      border-bottom: 3px solid #3b82f6;
     }
     .header h1 {
-      margin: 0;
-      color: #ffffff;
-      font-size: 26px;
-      font-weight: 700;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
     .header p {
-      margin: 8px 0 0 0;
-      color: #dbeafe;
-      font-size: 14px;
+      font-size: 15px;
+      color: #a0a0a0;
+      font-weight: 400;
     }
-    .body-content {
+    .content {
       padding: 40px 32px;
     }
-    .greeting {
-      font-size: 16px;
-      color: #0f172a;
-      margin-bottom: 20px;
-      font-weight: 500;
-    }
-    .intro-text {
-      font-size: 15px;
-      color: #334155;
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-    .context-box {
-      background-color: #f1f5f9;
+    .intro {
+      background-color: #fafafa;
       border-left: 4px solid #3b82f6;
-      padding: 24px;
-      margin: 32px 0;
-      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      border-radius: 4px;
     }
-    .context-box h3 {
-      margin: 0 0 16px 0;
-      font-size: 13px;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-    }
-    .context-items {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .context-item {
-      font-size: 14px;
-    }
-    .context-label {
-      color: #64748b;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-    .context-value {
-      color: #0f172a;
-      font-weight: 700;
-      font-size: 15px;
+    .intro p {
+      color: #333333;
+      font-size: 16px;
+      line-height: 1.7;
     }
     .section {
-      margin: 32px 0;
-      padding-bottom: 32px;
-      border-bottom: 2px solid #f1f5f9;
-    }
-    .section:last-of-type {
-      border-bottom: none;
+      margin-bottom: 32px;
     }
     .section-title {
-      font-size: 19px;
+      font-size: 22px;
       font-weight: 700;
       color: #0f172a;
-      margin: 0 0 16px 0;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e5e7eb;
     }
     .section-content {
-      color: #334155;
+      color: #475569;
       font-size: 15px;
       line-height: 1.8;
-      white-space: pre-wrap;
     }
-    ul {
-      padding-left: 20px;
-      margin: 0;
-    }
-    li {
-      margin-bottom: 14px;
+    .list-item {
+      background-color: #f8fafc;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border-left: 3px solid #3b82f6;
       color: #334155;
-      line-height: 1.7;
+      font-size: 15px;
     }
     .email-box {
-      background-color: #f8fafc;
-      border: 2px solid #e2e8f0;
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       padding: 20px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      color: #1e293b;
+      white-space: pre-line;
+      color: #334155;
+      font-size: 14px;
       line-height: 1.7;
+      margin-top: 12px;
     }
+    
+    /* CTA ÉPURÉ NOIR AVEC STROKE */
     .cta-section {
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-      border: 3px solid #3b82f6;
-      border-radius: 12px;
-      padding: 36px 32px;
+      background-color: #0a0a0a;
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      padding: 40px 32px;
       margin: 40px 0;
       text-align: center;
     }
-    .cta-badge {
-      display: inline-block;
-      background-color: #1e40af;
-      color: #ffffff;
-      padding: 8px 16px;
-      border-radius: 24px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
     .cta-title {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
-      color: #0f172a;
-      margin: 0 0 14px 0;
+      color: #ffffff;
+      margin: 0 0 16px 0;
       line-height: 1.3;
+      letter-spacing: -0.5px;
     }
     .cta-description {
-      font-size: 15px;
-      color: #1e293b;
-      margin: 0 0 28px 0;
+      font-size: 16px;
+      color: #a0a0a0;
+      margin: 0 0 32px 0;
       line-height: 1.7;
-      font-weight: 500;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .cta-link {
       display: inline-block;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: #ffffff !important;
+      background-color: #ffffff;
+      color: #000000 !important;
       text-decoration: none;
-      padding: 16px 40px;
-      border-radius: 8px;
+      padding: 16px 48px;
+      border-radius: 6px;
       font-weight: 700;
       font-size: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .cta-link:hover {
+      background-color: #f5f5f5;
+      border-color: #3b82f6;
     }
     .cta-features {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 20px;
       flex-wrap: wrap;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #475569;
-      font-weight: 600;
-    }
-    .footer {
-      background-color: #f8fafc;
-      padding: 32px;
-      text-align: center;
-      font-size: 14px;
-      color: #64748b;
-      border-top: 2px solid #e2e8f0;
-    }
-    .signature {
       margin-top: 24px;
+      font-size: 13px;
+      color: #737373;
+      font-weight: 500;
+    }
+    .cta-compatibility {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #525252;
+      font-weight: 400;
+    }
+    
+    .signature {
+      margin-top: 40px;
       padding-top: 24px;
-      border-top: 2px solid #e2e8f0;
+      border-top: 1px solid #e5e7eb;
+      text-align: left;
     }
     .signature-name {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #0f172a;
-      margin: 0 0 6px 0;
+      margin-bottom: 4px;
     }
     .signature-title {
       font-size: 14px;
       color: #64748b;
-      margin: 0;
-      font-weight: 500;
+    }
+    .footer {
+      background-color: #f8fafc;
+      padding: 24px 32px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      border-top: 1px solid #e5e7eb;
     }
     @media only screen and (max-width: 600px) {
-      .email-wrapper { padding: 20px 10px; }
-      .body-content { padding: 32px 20px; }
-      .context-items { grid-template-columns: 1fr; }
-      .cta-section { padding: 28px 20px; }
-      .cta-title { font-size: 22px; }
+      .content {
+        padding: 24px 20px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+      .cta-title {
+        font-size: 22px;
+      }
+      .cta-features {
+        flex-direction: column;
+        gap: 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="email-wrapper">
-    <div class="email-content">
-      <!-- Header -->
-      <div class="header">
-        <h1>Script Lab PRO</h1>
-        <p>by Sales Whisperer</p>
+  <div class="email-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>📋 Votre Stratégie Commerciale</h1>
+      <p>Générée par Script Lab PRO</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Intro -->
+      <div class="intro">
+        <p><strong>Bonjour,</strong></p>
+        <p>Voici votre stratégie commerciale personnalisée pour <strong>${companyName}</strong>. Utilisez ce guide pour structurer vos appels et maximiser vos conversions.</p>
       </div>
 
-      <!-- Body -->
-      <div class="body-content">
-        <div class="greeting">
-          Bonjour,
-        </div>
-
-        <div class="intro-text">
-          Votre stratégie commerciale personnalisée pour <strong>${companyName}</strong> est prête. J'ai analysé votre contexte et préparé un plan d'action complet adapté à votre situation.
-        </div>
-
-        <!-- Context Box -->
-        <div class="context-box">
-          <h3>Votre contexte</h3>
-          <div class="context-items">
-            <div class="context-item">
-              <div class="context-label">Type d'appel</div>
-              <div class="context-value">${callType}</div>
-            </div>
-            <div class="context-item">
-              <div class="context-label">Marché</div>
-              <div class="context-value">${answers.market || 'N/A'}</div>
-            </div>
-            <div class="context-item">
-              <div class="context-label">Interlocuteur</div>
-              <div class="context-value">${answers.prospect_title || 'N/A'}</div>
-            </div>
-            <div class="context-item">
-              <div class="context-label">Objectif</div>
-              <div class="context-value">${answers.call_objective || 'N/A'}</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Strategy Sections -->
-        <div class="section">
-          <h2 class="section-title">📞 Introduction</h2>
-          <div class="section-content">${strategy.intro}</div>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">🎯 Questions de Découverte</h2>
-          <ul>
-            ${strategy.discovery.map(q => `<li>${q}</li>`).join('')}
-          </ul>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">✨ Positionnement de Valeur</h2>
-          <div class="section-content">${strategy.value_positioning}</div>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">⚡ Différenciation</h2>
-          <div class="section-content">${strategy.differentiation}</div>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">🛡️ Traitement Objection</h2>
-          <p style="font-size: 14px; color: #64748b; margin: 0 0 12px 0; font-weight: 600;"><strong>${answers.top_objection}</strong></p>
-          <div class="section-content">${strategy.objection_handling[answers.top_objection]}</div>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">✅ Closing</h2>
-          <div class="section-content">${strategy.closing}</div>
-        </div>
-
-        <div class="section">
-          <h2 class="section-title">📧 Email de Suivi</h2>
-          <div class="email-box">${strategy.follow_up_email}</div>
-        </div>
-
-        <!-- Sales Whisperer CTA -->
-        <div class="cta-section">
-          <div class="cta-badge">Passez au niveau supérieur</div>
-          <h3 class="cta-title">Et si vous aviez ces insights en temps réel ?</h3>
-          <p class="cta-description">
-            Sales Whisperer analyse vos conversations pendant vos appels et vous suggère exactement quoi dire au moment précis où vous en avez besoin.
-          </p>
-          <a href="${salesWhispererCTA.url}" class="cta-link">
-            Rejoindre la Waitlist Sales Whisperer
-          </a>
-          <div class="cta-features">
-            <span>✓ Temps réel</span>
-            <span>✓ IA Fine-Tuned</span>
-            <span>✓ Analytics détaillées</span>
-          </div>
-          <div style="margin-top: 14px; font-size: 12px; color: #64748b; font-weight: 500;">
-            Compatible Meet, Teams, Zoom, Salesforce
-          </div>
-        </div>
-
-        <!-- Signature -->
-        <div class="signature">
-          <p class="signature-name">Ugo Di Sario</p>
-          <p class="signature-title">Founder @ Sales Whisperer</p>
-        </div>
+      <!-- Introduction Section -->
+      <div class="section">
+        <h2 class="section-title">🎯 Introduction</h2>
+        <div class="section-content">${strategy.intro || 'Contenu non disponible'}</div>
       </div>
 
-      <!-- Footer -->
-      <div class="footer">
-        <p style="margin: 0 0 12px 0; font-weight: 600;">Bonne vente ! 💪</p>
-        <p style="margin: 0; font-size: 12px;">
-          Script Lab PRO • by Sales Whisperer
+      <!-- Questions de Découverte -->
+      <div class="section">
+        <h2 class="section-title">🔍 Questions de Découverte</h2>
+        ${strategy.discovery?.map((q, idx) => `
+          <div class="list-item"><strong>${idx + 1}.</strong> ${q}</div>
+        `).join('') || '<p class="section-content">Aucune question disponible</p>'}
+      </div>
+
+      <!-- Proposition de Valeur -->
+      <div class="section">
+        <h2 class="section-title">💎 Proposition de Valeur</h2>
+        <div class="section-content">${strategy.value || 'Contenu non disponible'}</div>
+      </div>
+
+      <!-- Différenciation -->
+      <div class="section">
+        <h2 class="section-title">⚡ Différenciation</h2>
+        <div class="section-content">${strategy.differentiation || 'Contenu non disponible'}</div>
+      </div>
+
+      <!-- Gestion des Objections -->
+      <div class="section">
+        <h2 class="section-title">🛡️ Gestion des Objections</h2>
+        ${strategy.objections?.map((obj, idx) => `
+          <div class="list-item">
+            <strong>Objection ${idx + 1}:</strong> ${obj.objection}<br>
+            <strong style="color: #3b82f6;">Réponse:</strong> ${obj.response}
+          </div>
+        `).join('') || '<p class="section-content">Aucune objection disponible</p>'}
+      </div>
+
+      <!-- Closing -->
+      <div class="section">
+        <h2 class="section-title">🎁 Closing</h2>
+        <div class="section-content">${strategy.closing || 'Contenu non disponible'}</div>
+      </div>
+
+      <!-- Email de Suivi -->
+      <div class="section">
+        <h2 class="section-title">📧 Email de Suivi</h2>
+        <div class="email-box">${strategy.follow_up_email || 'Contenu non disponible'}</div>
+      </div>
+
+      <!-- CTA SALES WHISPERER - VERSION ÉPURÉE -->
+      <div class="cta-section">
+        <h3 class="cta-title">Et si vous aviez ces insights en temps réel ?</h3>
+        <p class="cta-description">
+          Sales Whisperer analyse vos conversations pendant vos appels et vous suggère exactement quoi dire au moment précis où vous en avez besoin.
         </p>
+        <a href="${salesWhispererCTA?.url || 'https://tally.so/r/wdv5ZN'}" class="cta-link">
+          Rejoindre la Waitlist
+        </a>
+        <div class="cta-features">
+          <span>✓ Temps réel</span>
+          <span>✓ IA Fine-Tuned</span>
+          <span>✓ Analytics détaillées</span>
+        </div>
+        <div class="cta-compatibility">
+          Compatible Meet, Teams, Zoom, Salesforce
+        </div>
       </div>
+
+      <!-- Signature -->
+      <div class="signature">
+        <p class="signature-name">Ugo Di Sario</p>
+        <p class="signature-title">Founder @ Sales Whisperer</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p style="margin: 0 0 8px 0; font-weight: 600;">Bonne vente ! 💪</p>
+      <p style="margin: 0; font-size: 12px;">
+        Script Lab PRO • by Sales Whisperer
+      </p>
     </div>
   </div>
 </body>
