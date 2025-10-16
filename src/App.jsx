@@ -822,86 +822,53 @@ const App = () => {
 
                 <div className="grid md:grid-cols-3 gap-8 mb-12">
                   {/* Card 1 - Temps réel */}
-                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-cyan-400 to-blue-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
-                    
-                    {/* Glass card */}
-                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
-                      {/* Background gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-transparent"></div>
-                      
-                      {/* Glass effect */}
-                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
-                        {/* Icon container */}
-                        <div className="relative mb-6">
-                          <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 opacity-20 blur-xl rounded-2xl"></div>
-                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-blue-400/30 to-cyan-400/20 backdrop-blur-xl border border-blue-300/40 w-fit shadow-lg">
-                            <Zap className="w-12 h-12 text-blue-300 drop-shadow-lg" />
-                          </div>
+                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-blue-600 to-blue-800 shadow-2xl shadow-blue-500/30">
+                    <div className="relative p-10 h-full">
+                      {/* Icon container */}
+                      <div className="mb-6">
+                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
+                          <Zap className="w-12 h-12 text-white drop-shadow-lg" />
                         </div>
-                        
-                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">Temps réel</h4>
-                        <p className="text-white/70 leading-relaxed">
-                          Insights en moins d'1 seconde pendant vos appels
-                        </p>
                       </div>
+                      
+                      <h4 className="text-3xl font-bold mb-4 text-white">Temps réel</h4>
+                      <p className="text-blue-100 text-lg leading-relaxed">
+                        Insights en moins d'1 seconde pendant vos appels
+                      </p>
                     </div>
                   </div>
 
                   {/* Card 2 - IA Fine-Tuned */}
-                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-400 to-cyan-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
-                    
-                    {/* Glass card */}
-                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-cyan-500/20">
-                      {/* Background gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-transparent"></div>
-                      
-                      {/* Glass effect */}
-                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
-                        {/* Icon container */}
-                        <div className="relative mb-6">
-                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 opacity-20 blur-xl rounded-2xl"></div>
-                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-cyan-400/30 to-blue-400/20 backdrop-blur-xl border border-cyan-300/40 w-fit shadow-lg">
-                            <Sparkles className="w-12 h-12 text-cyan-300 drop-shadow-lg" />
-                          </div>
+                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-cyan-600 to-cyan-800 shadow-2xl shadow-cyan-500/30">
+                    <div className="relative p-10 h-full">
+                      {/* Icon container */}
+                      <div className="mb-6">
+                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
+                          <Sparkles className="w-12 h-12 text-white drop-shadow-lg" />
                         </div>
-                        
-                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">IA Fine-Tuned</h4>
-                        <p className="text-white/70 leading-relaxed">
-                          Entraînée sur les meilleures stratégies de vente
-                        </p>
                       </div>
+                      
+                      <h4 className="text-3xl font-bold mb-4 text-white">IA Fine-Tuned</h4>
+                      <p className="text-cyan-100 text-lg leading-relaxed">
+                        Entraînée sur les meilleures stratégies de vente
+                      </p>
                     </div>
                   </div>
 
                   {/* Card 3 - Analytics */}
-                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-sky-400 via-blue-400 to-sky-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
-                    
-                    {/* Glass card */}
-                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-sky-500/20">
-                      {/* Background gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-blue-500/10 to-transparent"></div>
-                      
-                      {/* Glass effect */}
-                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
-                        {/* Icon container */}
-                        <div className="relative mb-6">
-                          <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-blue-400 opacity-20 blur-xl rounded-2xl"></div>
-                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-sky-400/30 to-blue-400/20 backdrop-blur-xl border border-sky-300/40 w-fit shadow-lg">
-                            <TrendingUp className="w-12 h-12 text-sky-300 drop-shadow-lg" />
-                          </div>
+                  <div className="relative rounded-3xl overflow-hidden group transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-sky-600 to-sky-800 shadow-2xl shadow-sky-500/30">
+                    <div className="relative p-10 h-full">
+                      {/* Icon container */}
+                      <div className="mb-6">
+                        <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 w-fit">
+                          <TrendingUp className="w-12 h-12 text-white drop-shadow-lg" />
                         </div>
-                        
-                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">Analytics</h4>
-                        <p className="text-white/70 leading-relaxed">
-                          Stats détaillées et progression mesurable
-                        </p>
                       </div>
+                      
+                      <h4 className="text-3xl font-bold mb-4 text-white">Analytics</h4>
+                      <p className="text-sky-100 text-lg leading-relaxed">
+                        Stats détaillées et progression mesurable
+                      </p>
                     </div>
                   </div>
                 </div>
