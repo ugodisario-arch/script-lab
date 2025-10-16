@@ -264,27 +264,83 @@ const App = () => {
     if (email && email.includes('@')) {
       setIsGenerating(true);
       
+      // Générer la stratégie
+      const generatedStrategy = generateFallbackStrategy();
+      setStrategy(generatedStrategy);
+      
       try {
-        const response = await fetch('/api/generate-strategy', {
+        // Préparer les données pour l'email
+        const emailData = {
+          to: email,
+          subject: `🎯 Votre stratégie commerciale personnalisée - ${answers.company_name || 'Script Lab PRO'}`,
+          strategy: generatedStrategy,
+          answers: answers,
+          salesWhispererCTA: {
+            text: "🚀 Passez au niveau supérieur avec Sales Whisperer",
+            url: "https://tally.so/r/wdv5ZN",
+            description: "Obtenez ces insights en temps réel pendant vos appels"
+          }
+        };
+        
+        /* 
+        Template d'email recommandé pour votre backend :
+        
+        Subject: 🎯 Votre stratégie commerciale personnalisée - [Company Name]
+        
+        Bonjour,
+        
+        Votre stratégie commerciale personnalisée est prête ! 
+        
+        📋 VOTRE CONTEXTE :
+        - Type d'appel : [Cold/Qualifié]
+        - Entreprise : [Company Name]
+        - Prospect : [Prospect Title]
+        - Objectif : [Call Objective]
+        
+        [Inclure les sections de la stratégie formatées en HTML]
+        
+        ---
+        
+        🚀 PASSEZ AU NIVEAU SUPÉRIEUR
+        
+        Imaginez avoir cette stratégie en temps réel pendant vos appels...
+        
+        Sales Whisperer analyse vos conversations et vous suggère exactement quoi dire,
+        au moment précis où vous en avez besoin.
+        
+        [CTA Button: Rejoindre la Waitlist Sales Whisperer]
+        Link: https://tally.so/r/wdv5ZN
+        
+        ✓ Temps réel : Insights en moins d'1 seconde
+        ✓ IA Fine-Tuned : Sur les meilleures stratégies
+        ✓ Analytics : Progression mesurable
+        
+        Compatible avec Meet, Teams, Zoom, Salesforce
+        
+        ---
+        
+        Bonne vente ! 💪
+        L'équipe Script Lab PRO
+        */
+        
+        // Envoi à votre API backend
+        const response = await fetch('/api/send-strategy-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ answers, email })
+          body: JSON.stringify(emailData)
         });
         
-        const data = await response.json();
-        
-        if (data.fallback || !data.strategy) {
-          setStrategy(generateFallbackStrategy());
+        if (response.ok) {
+          console.log('✅ Email envoyé avec succès');
         } else {
-          setStrategy(data.strategy);
+          console.warn('⚠️ Erreur lors de l\'envoi de l\'email');
         }
         
-        setStage('result');
       } catch (error) {
-        console.error('Erreur:', error);
-        setStrategy(generateFallbackStrategy());
-        setStage('result');
+        console.error('❌ Erreur:', error);
+        // Continue quand même pour afficher la stratégie
       } finally {
+        setStage('result');
         setIsGenerating(false);
       }
     }
@@ -764,52 +820,85 @@ const App = () => {
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6 mb-12">
-                  <div className="relative rounded-2xl overflow-visible group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
-                    <div className="relative rounded-2xl overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-50"></div>
-                      <div className="absolute inset-0 border border-white/20 rounded-2xl"></div>
-                      <div className="relative backdrop-blur-2xl bg-black/30 p-8 rounded-2xl">
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 mb-6 w-fit border border-blue-400/30">
-                          <Zap className="w-10 h-10 text-blue-400" />
+                <div className="grid md:grid-cols-3 gap-8 mb-12">
+                  {/* Card 1 - Temps réel */}
+                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-cyan-400 to-blue-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
+                    
+                    {/* Glass card */}
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
+                      {/* Background gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-transparent"></div>
+                      
+                      {/* Glass effect */}
+                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
+                        {/* Icon container */}
+                        <div className="relative mb-6">
+                          <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 opacity-20 blur-xl rounded-2xl"></div>
+                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-blue-400/30 to-cyan-400/20 backdrop-blur-xl border border-blue-300/40 w-fit shadow-lg">
+                            <Zap className="w-12 h-12 text-blue-300 drop-shadow-lg" />
+                          </div>
                         </div>
-                        <h4 className="text-2xl font-bold mb-3 text-white/90">Temps réel</h4>
-                        <p className="text-white/50 leading-relaxed">
+                        
+                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">Temps réel</h4>
+                        <p className="text-white/70 leading-relaxed">
                           Insights en moins d'1 seconde pendant vos appels
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="relative rounded-2xl overflow-visible group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-300 opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
-                    <div className="relative rounded-2xl overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent opacity-50"></div>
-                      <div className="absolute inset-0 border border-white/20 rounded-2xl"></div>
-                      <div className="relative backdrop-blur-2xl bg-black/30 p-8 rounded-2xl">
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/10 mb-6 w-fit border border-cyan-400/30">
-                          <Sparkles className="w-10 h-10 text-cyan-400" />
+                  {/* Card 2 - IA Fine-Tuned */}
+                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-400 to-cyan-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
+                    
+                    {/* Glass card */}
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-cyan-500/20">
+                      {/* Background gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-transparent"></div>
+                      
+                      {/* Glass effect */}
+                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
+                        {/* Icon container */}
+                        <div className="relative mb-6">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 opacity-20 blur-xl rounded-2xl"></div>
+                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-cyan-400/30 to-blue-400/20 backdrop-blur-xl border border-cyan-300/40 w-fit shadow-lg">
+                            <Sparkles className="w-12 h-12 text-cyan-300 drop-shadow-lg" />
+                          </div>
                         </div>
-                        <h4 className="text-2xl font-bold mb-3 text-white/90">IA Fine-Tuned</h4>
-                        <p className="text-white/50 leading-relaxed">
+                        
+                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">IA Fine-Tuned</h4>
+                        <p className="text-white/70 leading-relaxed">
                           Entraînée sur les meilleures stratégies de vente
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="relative rounded-2xl overflow-visible group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-white opacity-25 blur-2xl group-hover:opacity-35 transition-opacity"></div>
-                    <div className="relative rounded-2xl overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-transparent to-transparent opacity-50"></div>
-                      <div className="absolute inset-0 border border-white/20 rounded-2xl"></div>
-                      <div className="relative backdrop-blur-2xl bg-black/30 p-8 rounded-2xl">
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500/20 to-blue-600/10 mb-6 w-fit border border-sky-400/30">
-                          <TrendingUp className="w-10 h-10 text-sky-400" />
+                  {/* Card 3 - Analytics */}
+                  <div className="relative rounded-3xl overflow-visible group transform hover:scale-105 transition-all duration-500">
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-sky-400 via-blue-400 to-sky-500 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity duration-500"></div>
+                    
+                    {/* Glass card */}
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-sky-500/20">
+                      {/* Background gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-blue-500/10 to-transparent"></div>
+                      
+                      {/* Glass effect */}
+                      <div className="relative backdrop-blur-3xl bg-white/5 border border-white/30 rounded-3xl p-8 h-full">
+                        {/* Icon container */}
+                        <div className="relative mb-6">
+                          <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-blue-400 opacity-20 blur-xl rounded-2xl"></div>
+                          <div className="relative p-5 rounded-2xl bg-gradient-to-br from-sky-400/30 to-blue-400/20 backdrop-blur-xl border border-sky-300/40 w-fit shadow-lg">
+                            <TrendingUp className="w-12 h-12 text-sky-300 drop-shadow-lg" />
+                          </div>
                         </div>
-                        <h4 className="text-2xl font-bold mb-3 text-white/90">Analytics</h4>
-                        <p className="text-white/50 leading-relaxed">
+                        
+                        <h4 className="text-2xl font-bold mb-4 text-white drop-shadow-lg">Analytics</h4>
+                        <p className="text-white/70 leading-relaxed">
                           Stats détaillées et progression mesurable
                         </p>
                       </div>
