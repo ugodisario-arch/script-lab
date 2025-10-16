@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check, TrendingUp, ChevronDown, ChevronUp, Users, Calendar, Building } from 'lucide-react';
+import { Send, Sparkles, Target, Zap, Phone, Mail, Copy, Check, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 const App = () => {
   const [stage, setStage] = useState('intro');
@@ -21,42 +21,7 @@ const App = () => {
     email: true
   });
 
-  // Mock data for admin
-  const [strategiesData] = useState([
-    {
-      id: 1,
-      email: 'jean.dupont@techcorp.fr',
-      company_name: 'TechCorp',
-      market: 'B2B',
-      call_type: 'cold',
-      prospect_title: 'Directeur Commercial',
-      ticket: '5 000€ - 20 000€',
-      created_at: '2024-01-15T10:30:00',
-      main_pain: 'Perd des deals par manque de réactivité'
-    },
-    {
-      id: 2,
-      email: 'marie.martin@innovsaas.com',
-      company_name: 'InnovSaaS',
-      market: 'B2B',
-      call_type: 'qualified',
-      prospect_title: 'CEO',
-      ticket: '20 000€ - 100 000€',
-      created_at: '2024-01-15T14:20:00',
-      main_pain: 'Équipe commerciale qui ne performe pas'
-    },
-    {
-      id: 3,
-      email: 'pierre.bernard@salesup.fr',
-      company_name: 'SalesUp',
-      market: 'B2B',
-      call_type: 'cold',
-      prospect_title: 'VP Sales',
-      ticket: '1 000€ - 5 000€',
-      created_at: '2024-01-14T16:45:00',
-      main_pain: 'Turnover élevé des commerciaux'
-    }
-  ]);
+
 
   const questions = [
     {
@@ -475,17 +440,6 @@ const App = () => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('fr-FR', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
-  };
-
   const filteredQuestions = getFilteredQuestions();
   const question = stage === 'questions' ? filteredQuestions[currentQuestion] : null;
   const progress = stage === 'questions' ? ((currentQuestion + 1) / filteredQuestions.length) * 100 : 0;
@@ -509,24 +463,6 @@ const App = () => {
             <p className="text-xs text-white/40 mt-0.5">by <span className="font-semibold">Sales Whisperer</span></p>
           </div>
           <div className="flex items-center gap-6">
-            {stage === 'result' && (
-              <button
-                onClick={() => setStage('admin')}
-                className="text-sm text-white/60 hover:text-white/90 transition-colors flex items-center gap-2"
-              >
-                <Users className="w-4 h-4" />
-                <span>Admin</span>
-              </button>
-            )}
-            {stage === 'admin' && (
-              <button
-                onClick={() => setStage('result')}
-                className="text-sm text-white/60 hover:text-white/90 transition-colors flex items-center gap-2"
-              >
-                <Target className="w-4 h-4" />
-                <span>Ma Stratégie</span>
-              </button>
-            )}
             <a 
               href="https://tally.so/r/wdv5ZN" 
               target="_blank" 
@@ -1092,86 +1028,6 @@ const App = () => {
                   </li>
                 </ul>
               </div>
-            </div>
-          </div>
-        )}
-
-        {stage === 'admin' && (
-          <div className="space-y-8 py-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-4xl font-bold text-white mb-2">Stratégies créées</h2>
-                <p className="text-white/50">Aperçu de toutes les stratégies générées</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                  <span className="text-white/50 text-sm">Total: </span>
-                  <span className="text-white font-bold text-2xl">{strategiesData.length}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {strategiesData.map((item) => (
-                <div key={item.id} className="relative rounded-2xl overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent"></div>
-                  <div className="absolute inset-0 border border-white/10 rounded-2xl"></div>
-                  <div className="relative backdrop-blur-xl bg-black/40 p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/10 border border-blue-500/20">
-                            <Building className="w-5 h-5 text-blue-400" />
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-white/90">{item.company_name}</h3>
-                            <p className="text-sm text-white/40">{item.email}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                          <div className="p-4 rounded-xl bg-black/20 border border-white/5">
-                            <p className="text-xs text-white/40 mb-1">Type d'appel</p>
-                            <p className="text-sm font-semibold text-white/80">
-                              {item.call_type === 'cold' ? '❄️ Cold Call' : '🎯 Qualifié'}
-                            </p>
-                          </div>
-                          
-                          <div className="p-4 rounded-xl bg-black/20 border border-white/5">
-                            <p className="text-xs text-white/40 mb-1">Marché</p>
-                            <p className="text-sm font-semibold text-white/80">{item.market}</p>
-                          </div>
-                          
-                          <div className="p-4 rounded-xl bg-black/20 border border-white/5">
-                            <p className="text-xs text-white/40 mb-1">Interlocuteur</p>
-                            <p className="text-sm font-semibold text-white/80">{item.prospect_title}</p>
-                          </div>
-                          
-                          <div className="p-4 rounded-xl bg-black/20 border border-white/5">
-                            <p className="text-xs text-white/40 mb-1">Ticket</p>
-                            <p className="text-sm font-semibold text-white/80">{item.ticket}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 p-4 rounded-xl bg-black/20 border border-white/5">
-                          <p className="text-xs text-white/40 mb-2">Problématique principale</p>
-                          <p className="text-sm text-white/70">{item.main_pain}</p>
-                        </div>
-                      </div>
-
-                      <div className="ml-6 text-right">
-                        <div className="flex items-center gap-2 text-white/40 text-sm mb-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{formatDate(item.created_at)}</span>
-                        </div>
-                        <button className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-sm font-semibold text-white/80 transition-all">
-                          Voir détails
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}
